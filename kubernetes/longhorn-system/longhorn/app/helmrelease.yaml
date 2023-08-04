@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rancher
+  namespace: longhorn-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: longhorn
+      version: "1.4.2"
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  # https://github.com/longhorn/longhorn/blob/master/chart/values.yaml
+  values:
+    persistence:
+      defaultDataLocality: best-effort
+      reclaimPolicy: Retain
+    defaultSettings:
+      backupTarget: "s3://kubernetes.longhorn.backup@eu-central-1/"
+      backupTargetCredentialSecret: longhorn-wasabi-access

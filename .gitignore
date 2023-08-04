@@ -1,0 +1,8 @@
+# k8s
+kubeconfig
+# vscode-sops
+*.tmp.yaml
+.config.env
+*.agekey
+*.pub
+*.key
