@@ -30,5 +30,5 @@ spec:
       defaultDataLocality: best-effort
       reclaimPolicy: Retain
     defaultSettings:
-      backupTarget: "s3://kubernetes.longhorn.backup@eu-central-1/"
-      backupTargetCredentialSecret: longhorn-wasabi-access
+      # backupTarget: "s3://abchost-longhorn@s3.eu-central-003/"
+      backupTargetCredentialSecret: longhorn-backblaze-access
