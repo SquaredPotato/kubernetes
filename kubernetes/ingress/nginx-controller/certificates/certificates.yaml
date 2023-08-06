@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: abchost
+  namespace: ingress
+spec:
+  secretName: abchost-tls
+  issuerRef:
+    name: cloudflare-staging-stefan
+    kind: ClusterIssuer
+  commonName: abchost.nl
+  dnsNames:
+    - abchost.nl
+    - "*.abchost.nl"
