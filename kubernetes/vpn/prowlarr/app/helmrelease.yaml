@@ -37,12 +37,38 @@ spec:
       value: 1000
     service:
       main:
-        type: LoadBalancer
-        externalIPs: ["192.168.4.101"]
         ports:
           http:
-            targetPort: 9696
-            port: 80
+            port: &port 9696
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/nord.css"></head>';
+            sub_filter_once on;
+        hosts:
+          - host: &host "{{ .Release.Name }}.abchost.nl"
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true

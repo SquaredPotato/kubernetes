@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: nginx-certificates
-  path: ./kubernetes/ingress/nginx-ingress-controller/app
+  path: ./kubernetes/ingress/nginx-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
