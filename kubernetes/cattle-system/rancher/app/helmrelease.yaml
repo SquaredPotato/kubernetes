@@ -28,7 +28,17 @@ spec:
     hostname: "rancher.abchost.nl"
     bootstrapPassword: "admin"
     ingress:
-      enabled: false
+      enabled: true
+      includeDefaultExtraAnnotations: true
+      extraAnnotations: {}
+      ingressClassName: "internal"
+      # backend port number
+      servicePort: 80
+
+      # configurationSnippet - Add additional Nginx configuration. This example statically sets a header on the ingress.
+      # configurationSnippet: |
+      #   more_set_input_headers "X-Forwarded-Host: {{ .Values.hostname }}";
+
     global:
       cattle:
         psp:

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: nginx-ingress-controller
+  name: nginx-internal-controller
   namespace: ingress
 spec:
   interval: 15m
@@ -118,11 +118,11 @@ spec:
       ## IngressClass resources are supported since k8s >= 1.18 and required since k8s >= 1.19
       ingressClassResource:
         # -- Name of the ingressClass
-        name: nginx
+        name: internal
         # -- Is this ingressClass enabled or not
         enabled: true
         # -- Is this the default ingressClass for the cluster
-        default: false
+        default: true
         # -- Controller-value of the controller that is processing this ingressClass
         controllerValue: "k8s.io/ingress-nginx"
         # -- Parameters is a link to a custom resource containing additional
@@ -271,13 +271,14 @@ spec:
       # -- Topology spread constraints rely on node labels to identify the topology domain(s) that each Node is in.
       ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
       ##
-      topologySpreadConstraints: []
-      # - maxSkew: 1
-      #   topologyKey: topology.kubernetes.io/zone
-      #   whenUnsatisfiable: DoNotSchedule
-      #   labelSelector:
-      #     matchLabels:
-      #       app.kubernetes.io/instance: ingress-nginx-internal
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: nginx-internal
+              app.kubernetes.io/component: controller
 
       # -- `terminationGracePeriodSeconds` to avoid killing pods before we are ready
       ## wait up to five minutes for the drain of connections
@@ -346,12 +347,11 @@ spec:
       ## Ideally, there should be no limits.
       ## https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/
       resources:
-        ##  limits:
-        ##    cpu: 100m
-        ##    memory: 90Mi
         requests:
           cpu: 100m
-          memory: 90Mi
+          memory: 250Mi
+        limits:
+          memory: 500Mi
       # Mutually exclusive with keda autoscaling
       autoscaling:
         enabled: false
@@ -605,7 +605,11 @@ spec:
         certificate: "/usr/local/certificates/cert"
         key: "/usr/local/certificates/key"
         namespaceSelector: {}
-        objectSelector: {}
+        objectSelector:
+          matchExpressions:
+            - key: ingress-class
+              operator: In
+              values: ["internal"]
         # -- Labels to be added to admission webhooks
         labels: {}
         # -- Use an existing PSP instead of creating one
