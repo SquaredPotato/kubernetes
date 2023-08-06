@@ -1,0 +1,18 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cloudflare-production-stefan
+spec:
+  acme:
+    email: stefan+cloudflare@schokker.dev
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: cloudflare-production-stefan
+    solvers:
+      - dns01:
+          cloudflare:
+            email: stefan+cloudflare@schokker.dev
+            apiTokenSecretRef:
+              name: cloudflare-api-stefan
+              key: apiToken
