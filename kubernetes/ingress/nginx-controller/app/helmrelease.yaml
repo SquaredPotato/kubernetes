@@ -179,9 +179,9 @@ spec:
       maxmindLicenseKey: ""
       # -- Additional command line arguments to pass to Ingress-Nginx Controller
       # E.g. to specify the default SSL certificate you can use
-      extraArgs: {}
-      ## extraArgs:
-      ##   default-ssl-certificate: "<namespace>/<secret_name>"
+      # extraArgs: {}
+      extraArgs:
+        default-ssl-certificate: "ingress/abchost-tls"
 
       # -- Additional environment variables to set
       extraEnvs: []
@@ -451,7 +451,7 @@ spec:
         ##
         externalIPs: []
         # -- Used by cloud providers to connect the resulting `LoadBalancer` to a pre-existing static IP according to https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-        loadBalancerIP: ""
+        loadBalancerIP: "192.168.4.199"
         loadBalancerSourceRanges: []
         # -- Used by cloud providers to select a load balancer implementation other than the cloud provider default. https://kubernetes.io/docs/concepts/services-networking/service/#load-balancer-class
         loadBalancerClass: ""
