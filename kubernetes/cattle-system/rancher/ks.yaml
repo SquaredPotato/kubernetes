@@ -7,7 +7,7 @@ metadata:
 spec:
   dependsOn:
     - name: apps-cert-manager
-  path: ./kubernetes/rancher/rancher/app
+  path: ./kubernetes/cattle-system/rancher/app
   prune: true
   sourceRef:
     kind: GitRepository
