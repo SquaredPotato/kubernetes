@@ -8,7 +8,7 @@ metadata:
 spec:
   secretName: abchost-tls
   issuerRef:
-    name: cloudflare-staging-stefan
+    name: cloudflare-production-stefan
     kind: ClusterIssuer
   commonName: abchost.nl
   dnsNames:
