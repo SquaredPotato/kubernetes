@@ -1,21 +1,21 @@
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: nginx-ingress-controller
-#   namespace: ingress
-# spec:
-#   dependsOn:
-#     - name: apps-longhorn
-#   path: ./kubernetes/ingress/nginx-ingress-controller/app
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: ingress
-#   wait: true
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: nginx-ingress-controller
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: nginx-certificates
+  path: ./kubernetes/ingress/nginx-ingress-controller/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
