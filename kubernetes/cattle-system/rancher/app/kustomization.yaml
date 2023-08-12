@@ -4,3 +4,4 @@ kind: Kustomization
 namespace: cattle-system
 resources:
   - ./helmrelease.yaml
+  - ./ingress.yaml
