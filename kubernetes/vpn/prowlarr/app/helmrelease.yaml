@@ -62,17 +62,14 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/nord.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/hotpink.css"></head>';
             sub_filter_once on;
-          nginx.ingress.kubernetes.io/force-ssl-redirect: true
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
-          - host: &host "{{ .Release.Name }}.abchost.nl"
+          - host: "prowlarr.abchost.nl"
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
