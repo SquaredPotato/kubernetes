@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: immich-database
+  namespace: immich
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: postgres
+      tag: 15.3-alpine3.18
+    strategy:
+      type: Recreate
+    envFrom:
+      - secretRef:
+          name: immich-database
+    env:
+      - name: PGDATA
+        value: /postgres/data
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+          postgres:
+            enabled: true
+            primary: true
+            protocol: TCP
+            port: 5432
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - 'exec pg_isready -U $POSTGRES_USER -d "dbname=$POSTGRES_DB" -h 127.0.0.1 -p 5432'
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        existingClaim: immich-database
+        mountPath: /postgres
