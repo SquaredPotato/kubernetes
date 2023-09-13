@@ -31,7 +31,7 @@ spec:
   values:
     image:
       repository: ghcr.io/immich-app/immich-web
-      tag: v1.77.0
+      tag: v1.78.0
     envFrom:
       - configMapRef:
           name: immich
