@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: postgres
-      tag: 15.3-alpine3.18
+      tag: 15.4-alpine3.18
     strategy:
       type: Recreate
     envFrom:
