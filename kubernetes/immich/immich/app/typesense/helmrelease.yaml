@@ -28,8 +28,6 @@ spec:
   values:
     controller:
       type: statefulset
-      replicas: 3
-      strategy: RollingUpdate
     image:
       repository: typesense/typesense
       tag: 0.25.1
