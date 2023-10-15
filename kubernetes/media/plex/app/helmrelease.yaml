@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/plex
-      tag: "1.32.5"
+      tag: "1.32.6"
     strategy:
       type: Recreate
     env:
