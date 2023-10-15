@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: linuxserver/radarr
-      tag: version-4.4.4.7068
+      repository: linuxserver/lidarr
+      tag: version-1.4.5.3639
     strategy:
       type: Recreate
     env:
@@ -41,13 +41,13 @@ spec:
       main:
         ports:
           http:
-            port: 7878
+            port: 8686
     ingress:
       main:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: radarr.abchost.nl
+          - host: lidarr.abchost.nl
             paths:
               - path: /
                 pathType: Prefix
@@ -55,7 +55,7 @@ spec:
       config:
         enabled: true
         type: pvc
-        existingClaim: radarr
+        existingClaim: lidarr
         mountPath: /config
       nfs-general:
         enabled: true
