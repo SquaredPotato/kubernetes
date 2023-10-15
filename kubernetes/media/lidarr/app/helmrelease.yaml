@@ -46,6 +46,12 @@ spec:
       main:
         enabled: true
         ingressClassName: internal
+        annotations:
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/hotpink.css"></head>';
+            sub_filter_once on;
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
           - host: lidarr.abchost.nl
             paths:
