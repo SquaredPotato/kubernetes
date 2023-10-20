@@ -37,5 +37,6 @@ spec:
             backend:
               service:
                 name: *app
+                path: /
                 port:
-                  number: &port
+                  number: &91
