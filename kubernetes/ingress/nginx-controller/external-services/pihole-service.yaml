@@ -2,25 +2,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app external-pihole
+  name: &app external-pihole-ingress
   namespace: ingress
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: pi.abchost.nl
-  ports:
-    - name: https
-      port: &port 443
-      protocol: TCP
-      targetPort: *port
+  # These should point to the actual DNS service
+  externalName: pihole.abchost.nl
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app external-pihole
-  namespace: networking
+  name: &app external-pihole-ingress
+  namespace: ingress
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
   labels:
@@ -29,7 +25,8 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: 192.168.2.254
+    # These are the ingress rules
+    - host: dns.abchost.nl
       http:
         paths:
           - path: /
@@ -37,6 +34,5 @@ spec:
             backend:
               service:
                 name: *app
-                path: /
                 port:
-                  number: &91
+                  number: 91
