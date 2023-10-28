@@ -6,7 +6,7 @@ metadata:
   namespace: database
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.abchost.nl
-    metallb.universe.tf/loadBalancerIPs: 192.168.4.202
+    metallb.universe.tf/loadBalancerIPs: 192.168.4.197
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
