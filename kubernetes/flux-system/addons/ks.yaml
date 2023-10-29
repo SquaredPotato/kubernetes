@@ -6,13 +6,11 @@ metadata:
   name: cluster-apps-flux-addons
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/flux-system/addons/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
   wait: true
   interval: 30m
   retryInterval: 1m
