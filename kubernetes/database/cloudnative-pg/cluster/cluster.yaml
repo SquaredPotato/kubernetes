@@ -16,7 +16,6 @@ spec:
       kube-image-keeper.enix.io/image-caching-policy: ignore
   primaryUpdateStrategy: unsupervised
   storage:
-    storageClass: default
     size: 20Gi
   superuserSecret:
     name: cloudnative-pg-secret
