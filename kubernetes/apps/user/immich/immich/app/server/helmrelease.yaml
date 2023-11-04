@@ -30,7 +30,7 @@ spec:
     - name: immich-typesense
       namespace: immich
     - name: redis
-      namespace: redis
+      namespace: database
   values:
     controller:
       replicas: 3
