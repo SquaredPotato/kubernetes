@@ -3,6 +3,4 @@ kind: Kustomization
 metadata:
   name: cluster-apps-flux-system
 resources:
-- gotk-components.yaml
-- gotk-sync.yaml
 - ./addons/ks.yaml
