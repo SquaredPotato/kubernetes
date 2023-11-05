@@ -7,7 +7,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: ssh://git@github.com/squaredpotato/kubernetes
+  url: ssh://git@github.com/SquaredPotato/kubernetes.git
   ref:
     branch: main
   secretRef:
