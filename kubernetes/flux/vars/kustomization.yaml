@@ -7,5 +7,10 @@ configMapGenerator:
     namespace: flux-system
     envs:
       - ./cluster-settings.env
+secretGenerator:
+  - name: cluster-secrets
+    namespace: flux-system
+    envs:
+      - ./cluster-secrets.sops.env
 generatorOptions:
   disableNameSuffixHash: true
