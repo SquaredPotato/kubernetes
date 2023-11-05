@@ -25,7 +25,7 @@ spec:
       database: app
       owner: app
       secret:
-        name: default-db-user
+        name: cloudnative-pg-app-user
     # recovery:
       # source: &previousCluster postgres-v0
   postgresql:
