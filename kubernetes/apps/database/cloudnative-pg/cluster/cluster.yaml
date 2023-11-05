@@ -20,7 +20,12 @@ spec:
     storageClass: local-path
   superuserSecret:
     name: cloudnative-pg-secret
-  # bootstrap:
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: default-db-user
     # recovery:
       # source: &previousCluster postgres-v0
   postgresql:
