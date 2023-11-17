@@ -10,7 +10,7 @@ metadata:
 spec:
   type: ExternalName
   # These should point to the actual DNS service
-  externalName: pihole.abchost.nl
+  externalName: pi.hole
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
