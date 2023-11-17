@@ -42,7 +42,7 @@ metadata:
   name: cluster-apps-pgadmin
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/database/admin/app
+  path: ./kubernetes/apps/database/cloudnative-pg/admin
   prune: true
   sourceRef:
     kind: GitRepository
