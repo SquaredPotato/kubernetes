@@ -11,6 +11,8 @@ spec:
   type: ExternalName
   # These should point to the actual DNS service
   externalName: pi.hole
+  ports:
+  - port: 91
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
