@@ -63,6 +63,7 @@ spec:
           volumeClaimTemplates:
             - name: pgadmin
               storageClass: longhorn
+              size: 1Gi
               globalMounts:
                 - path: /var/lib/pgadmin
     service:
