@@ -59,6 +59,14 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: pgadmin
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /var/lib/pgadmin
     service:
       main:
         ports:
@@ -75,9 +83,3 @@ spec:
                 service:
                   name: main
                   port: http
-    persistence:
-      config:
-        enabled: true
-        type: pvc
-        existingClaim: pgadmin
-        mountPath: /var/lib/pgadmin
