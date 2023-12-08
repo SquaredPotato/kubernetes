@@ -35,7 +35,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.90.1
+      tag: v1.90.2
     strategy:
       type: Recreate
     envFrom:
