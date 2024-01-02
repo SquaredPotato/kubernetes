@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: postgres
-      tag: 15.5-alpine3.18
+      repository: tensorchord/pgvecto-rs
+      tag: pg15-v0.1.11
     strategy:
       type: Recreate
     envFrom:
