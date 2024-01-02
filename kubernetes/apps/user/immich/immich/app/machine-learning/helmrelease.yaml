@@ -27,15 +27,13 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: immich
-    - name: immich-typesense
-      namespace: immich
   values:
     controller:
       replicas: 3
       strategy: RollingUpdate
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.90.2
+      tag: v1.91.0
     strategy:
       type: Recreate
     envFrom:

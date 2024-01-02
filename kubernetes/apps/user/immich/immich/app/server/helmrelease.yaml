@@ -27,8 +27,6 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: immich
-    - name: immich-typesense
-      namespace: immich
     - name: redis
       namespace: database
   values:
@@ -37,7 +35,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/immich-app/immich-server
-      tag: v1.90.2
+      tag: v1.91.0
     args: ["start-server.sh"]
     strategy:
       type: Recreate
@@ -62,11 +60,6 @@ spec:
           secretKeyRef:
             name: immich-database
             key: POSTGRES_PASSWORD
-      - name: TYPESENSE_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: typesense
-            key: TYPESENSE_API_KEY
       - name: PUID
         value: 1000
       - name: PGID
