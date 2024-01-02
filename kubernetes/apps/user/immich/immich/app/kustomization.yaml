@@ -8,5 +8,4 @@ resources:
   - ./database
   - ./machine-learning
   - ./microservices
-  - ./typesense
   - ./server
