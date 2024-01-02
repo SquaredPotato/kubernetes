@@ -9,7 +9,7 @@ metadata:
     kyverno.io/ignore: "true"
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.4
+  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:15.5-v0.1.11
   enableSuperuserAccess: true
   inheritedMetadata:
     labels:
@@ -27,11 +27,13 @@ spec:
     #   secret:
     #     name: cloudnative-pg-app-user
     recovery:
-      source: &previousCluster postgres-v1
+      source: &previousCluster postgres-v2
   postgresql:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vectors.so"
   monitoring:
     enablePodMonitor: true
   backup:
@@ -42,7 +44,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: &currentCluster postgres-v2
+      serverName: &currentCluster postgres-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
