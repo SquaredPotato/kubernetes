@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/sonarr
-      tag: version-3.0.10.1567
+      tag: 4.0.0
     strategy:
       type: Recreate
     env:
