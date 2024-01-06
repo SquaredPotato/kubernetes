@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: apps-longhorn
     - name: apps-prowlarr
+    - name: cluster-apps-cloudnative-pg-cluster
   path: ./kubernetes/apps/user/media/radarr/app
   prune: true
   sourceRef:

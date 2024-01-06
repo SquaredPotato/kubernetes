@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/radarr
-      tag: 5.2.6
+      tag: 5.2.6.8376-ls198
     strategy:
       type: Recreate
     env:

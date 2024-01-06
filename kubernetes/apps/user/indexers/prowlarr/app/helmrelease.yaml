@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/prowlarr
-      tag: 1.11.4
+      tag: version-1.11.4.4173
     strategy:
       type: Recreate
     env:

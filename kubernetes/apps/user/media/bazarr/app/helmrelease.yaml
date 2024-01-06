@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/bazarr
-      tag: 1.4.0
+      tag: v1.4.0-ls230
     strategy:
       type: Recreate
     env:
