@@ -39,7 +39,7 @@ spec:
             env:
               ATUIN_HOST: 0.0.0.0
               ATUIN_PORT: &port 80
-              ATUIN_OPEN_REGISTRATION: "true"
+              ATUIN_OPEN_REGISTRATION: "false"
               ATUIN_METRICS__ENABLE: "true"
               ATUIN_METRICS__HOST: 0.0.0.0
               ATUIN_METRICS__PORT: &metricsPort 8080
@@ -81,11 +81,24 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     ingress:
-      main:
+      internal:
         enabled: true
         className: internal
         hosts:
           - host: &host sh.abchost.nl
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+      external:
+        enabled: true
+        className: external
+        hosts:
+          - host: *host
             paths:
               - path: /
                 service:
