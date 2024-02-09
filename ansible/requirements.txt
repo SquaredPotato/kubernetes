@@ -76,7 +76,7 @@ jsonschema==4.21.1
     # via
     #   ansible-compat
     #   molecule
-kubernetes==26.1.0
+kubernetes==28.1.0
     # via -r requirements.in
 markupsafe==2.1.5
     # via jinja2
