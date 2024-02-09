@@ -5,7 +5,7 @@ metadata:
   name: &app user-apps-atuin
   namespace: flux-system
 spec:
-  targetNamespace: atuin
+  targetNamespace: utilities
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
