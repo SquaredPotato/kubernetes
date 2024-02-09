@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: apps-vaultwarden
+  name: user-apps-vaultwarden
   namespace: flux-system
 spec:
   dependsOn:
     - name: apps-longhorn
-  path: ./kubernetes/apps/user/vaultwarden/vaultwarden/app
+  path: ./kubernetes/apps/user/utilities/vaultwarden/app
   prune: true
   sourceRef:
     kind: GitRepository
