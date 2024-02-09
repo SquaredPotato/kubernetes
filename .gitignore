@@ -6,4 +6,9 @@ kubeconfig
 *.agekey
 *.pub
 *.key
+*.pub
 .idea
+ansible/bruh/lib/*
+ansible/molecule/*
+kubeconfig
+recovery.md

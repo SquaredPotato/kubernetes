@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+  namespace: vaultwarden
+  labels:
+    app.kubernetes.io/name: ubuntu
+    app.kubernetes.io/instance: ubuntu
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ubuntu
+      app.kubernetes.io/instance: ubuntu
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app.kubernetes.io/name: ubuntu
+        app.kubernetes.io/instance: ubuntu
+    spec:
+      containers:
+        - name: ubuntu
+          image: "ubuntu"
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/sh", "-c", "while true; do sleep 1000; done"]
+          volumeMounts:
+            - mountPath: /volume
+              name: volume
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: vaultwarden
+
+            # ./pgloader --with "quote identifiers" --with "data only" --cast "column table_blacklist.timestamp to timestamp" --cast "column table_blacklist_movie.timestamp to timestamp" --cast "column table_history.timestamp to timestamp" --cast "column table_history_movie.timestamp to timestamp" /bazarr.db "postgresql://bazarr:29o228ExYd5g5m82Q6qwATU2JVSy3iX8@postgres-rw.database.svc.cluster.local:5432/bazarr"
