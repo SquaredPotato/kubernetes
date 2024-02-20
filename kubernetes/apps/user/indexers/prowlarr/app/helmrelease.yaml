@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: linuxserver/prowlarr
-      tag: version-1.11.4.4173
+      repository: linuxserver/prowlarr 
+      tag: 1.13.3.4273-ls53
     strategy:
       type: Recreate
     env:
