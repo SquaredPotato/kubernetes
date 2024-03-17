@@ -1,71 +1,111 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: radarr
-  namespace: media
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    image:
-      repository: linuxserver/radarr
-      tag: 5.2.6.8376-ls198
-    strategy:
-      type: Recreate
-    env:
-      - name: PUID
-        value: "101000"
-      - name: PGID
-        value: "101000"
-      - name: TZ
-        value: "Europe/Amsterdam"
+    controllers:
+      radarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.4.2.8667@sha256:e075e990e4bfa3bea63a17ff58e4c4b33ac2f1233b2d29acb8cbdee4c43b1f2f
+            env:
+              COMPlus_EnableDiagnostics: "0"
+              RADARR__AUTHENTICATION_METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__INSTANCE_NAME: "Radarr"
+              RADARR__PORT: &port 443
+              RADARR__LOG_LEVEL: info
+              RADARR__THEME: "dark"
+              TZ: "Europe/Amsterdam"
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 101000
+            runAsGroup: 101000
+            runAsNonRoot: true
+            fsGroup: 101000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
-      main:
+      app:
+        controller: radarr
         ports:
           http:
-            port: 7878
+            port: *port
     ingress:
-      main:
-        enabled: true
-        ingressClassName: internal
+      app:
+        className: internal
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/hotpink.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/radarr/hotpink.css"></head>';
             sub_filter_once on;
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
-          - host: radarr.abchost.nl
+          - host: &host "{{ .Release.Name }}.abchost.nl"
             paths:
               - path: /
+                service:
+                  identifier: app
+                  port: http
                 pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
-        enabled: true
-        type: pvc
         existingClaim: radarr
-        mountPath: /config
-      nfs-general:
-        enabled: true
+      media:
         type: nfs
         server: 192.168.2.210
         path: /mnt/MAIN/contain/storage/general
-        mountPath: /mnt/general
+        globalMounts:
+          - path: /mnt/general
