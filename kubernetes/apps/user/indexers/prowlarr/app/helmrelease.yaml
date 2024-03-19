@@ -1,64 +1,85 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prowlarr
-  namespace: indexers
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: "1.5.1"
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    image:
-      repository: linuxserver/prowlarr 
-      tag: 1.13.3.4273-ls53
-    strategy:
-      type: Recreate
-    env:
-    - name: PUID
-      value: 1000
-    - name: PGID
-      value: 1000
+    controllers:
+      prowlarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/prowlarr
+              tag: 1.14.3.4333@sha256:7f90035619b4dbff6bff985181275300cd999be5d4f03fcaf359ef7068fc5e5e
+            env:
+              COMPlus_EnableDiagnostics: "0"
+              PROWLARR__AUTHENTICATION_METHOD: External
+              PROWLARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              PROWLARR__INSTANCE_NAME: "prowlarr"
+              PROWLARR__PORT: &port 443
+              PROWLARR__LOG_LEVEL: info
+              PROWLARR__THEME: "dark"
+              TZ: "Europe/Amsterdam"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 60
+                  periodSeconds: 30
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 101000
+            runAsGroup: 101000
+            runAsNonRoot: true
+            fsGroup: 101000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
-      main:
+      app:
+        controller: prowlarr
         ports:
           http:
-            port: &port 9696
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /ping
             port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
-      main:
-        enabled: true
-        ingressClassName: internal
+      app:
+        className: internal
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
@@ -66,13 +87,16 @@ spec:
             sub_filter_once on;
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
-          - host: "prowlarr.abchost.nl"
+          - host: &host "{{ .Release.Name }}.abchost.nl"
             paths:
               - path: /
+                service:
+                  identifier: app
+                  port: http
                 pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
-        enabled: true
-        type: pvc
         existingClaim: prowlarr
-        mountPath: /config
