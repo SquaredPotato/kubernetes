@@ -1,71 +1,111 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: bazarr
-  namespace: media
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
-    image:
-      repository: linuxserver/bazarr
-      tag: v1.4.0-ls230
-    strategy:
-      type: Recreate
-    env:
-      - name: PUID
-        value: "101000"
-      - name: PGID
-        value: "101000"
-      - name: TZ
-        value: "Europe/Amsterdam"
+    controllers:
+      bazarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/bazarr
+              tag: 1.4.2@sha256:113035f37f289f190781d9d728f2ebf56c895b972921820f5d30408427c837d9
+            env:
+              COMPlus_EnableDiagnostics: "0"
+              BAZARR__AUTHENTICATION_METHOD: External
+              BAZARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              BAZARR__INSTANCE_NAME: "bazarr"
+              BAZARR__PORT: &port 443
+              BAZARR__LOG_LEVEL: info
+              BAZARR__THEME: "dark"
+              TZ: "Europe/Amsterdam"
+            envFrom:
+              - secretRef:
+                  name: bazarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 60
+                  periodSeconds: 30
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 101000
+            runAsGroup: 101000
+            runAsNonRoot: true
+            fsGroup: 101000
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
-      main:
+      app:
+        controller: bazarr
         ports:
           http:
-            port: 6767
+            port: *port
     ingress:
-      main:
-        enabled: true
-        ingressClassName: internal
+      app:
+        className: internal
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/prowlarr/hotpink.css"></head>';
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.dev/css/base/bazarr/hotpink.css"></head>';
             sub_filter_once on;
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
-          - host: bazarr.abchost.nl
+          - host: &host "{{ .Release.Name }}.abchost.nl"
             paths:
               - path: /
+                service:
+                  identifier: app
+                  port: http
                 pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
-        enabled: true
-        type: pvc
         existingClaim: bazarr
-        mountPath: /config
-      nfs-general:
-        enabled: true
+      media:
         type: nfs
         server: 192.168.2.210
         path: /mnt/MAIN/contain/storage/general
-        mountPath: /mnt/general
+        globalMounts:
+          - path: /mnt/general
