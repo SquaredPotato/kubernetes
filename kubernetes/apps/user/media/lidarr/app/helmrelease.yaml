@@ -37,7 +37,7 @@ spec:
               LIDARR__AUTHENTICATION_METHOD: External
               LIDARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               LIDARR__INSTANCE_NAME: "lidarr"
-              LIDARR__PORT: &port 443
+              LIDARR__PORT: &port 80
               LIDARR__LOG_LEVEL: info
               LIDARR__THEME: "dark"
               TZ: "Europe/Amsterdam"
