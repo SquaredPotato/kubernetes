@@ -6,6 +6,8 @@ metadata:
   name: apps-mosquitto
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: apps-longhorn
   path: ./kubernetes/apps/user/home/mosquitto/app
   prune: true
   sourceRef:
