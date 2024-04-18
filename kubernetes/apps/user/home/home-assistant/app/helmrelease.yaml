@@ -36,7 +36,7 @@ spec:
             env:
               TZ: Europe/Amsterdam
               HASS_HTTP_TRUSTED_PROXY_1: 192.168.0.0/21
-              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/21
+              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -47,6 +47,7 @@ spec:
               limits:
                 memory: 1Gi
     defaultPodOptions:
+      hostNetwork: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
