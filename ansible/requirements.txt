@@ -99,7 +99,7 @@ packaging==24.0
     #   molecule
 platformdirs==4.2.0
     # via virtualenv
-pluggy==1.4.0
+pluggy==1.5.0
     # via molecule
 pre-commit==3.7.0
     # via -r requirements.in
