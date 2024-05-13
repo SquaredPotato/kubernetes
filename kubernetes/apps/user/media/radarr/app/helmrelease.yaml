@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/radarr
-              tag: 5.4.6.8723@sha256:cee5d4a3ba0ef3cd66e37f80434d61fb2dee457d66952a4f030bf1fd9fb10910
+              tag: 5.5.3.8819@sha256:2d89b183fa0d2a734d1301bf84fd7e0a9a1dc2402e5a5dab5a25de78d45444fd
             env:
               COMPlus_EnableDiagnostics: "0"
               RADARR__AUTHENTICATION_METHOD: External
