@@ -97,7 +97,7 @@ packaging==24.0
     #   ansible-compat
     #   ansible-core
     #   molecule
-platformdirs==4.2.1
+platformdirs==4.2.2
     # via virtualenv
 pluggy==1.5.0
     # via molecule
