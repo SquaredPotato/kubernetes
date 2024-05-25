@@ -62,6 +62,6 @@ spec:
       nfs-general:
         enabled: true
         type: nfs
-        server:  "192.168.2.210"
+        server: "${LAN_TRUENAS_IP}"
         path: /mnt/MAIN/contain/storage/general
         mountPath: /mnt/general
