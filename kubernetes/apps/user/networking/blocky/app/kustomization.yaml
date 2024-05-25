@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: blocky-config
+  - name: blocky-config-tpl
     namespace: networking
     files:
       - config.yml=./resources/blocky-config.yaml
