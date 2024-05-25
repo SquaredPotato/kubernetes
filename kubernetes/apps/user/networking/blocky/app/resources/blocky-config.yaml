@@ -12,7 +12,7 @@ customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
   mapping:
-    dns.abchost.nl: "192.168.4.195"
+    dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
 caching:
   cacheTimeNegative: -1
 blocking:
