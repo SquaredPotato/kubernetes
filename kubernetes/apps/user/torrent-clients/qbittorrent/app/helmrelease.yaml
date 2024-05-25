@@ -62,6 +62,6 @@ spec:
       nfs-general:
         enabled: true
         type: nfs
-        server: 192.168.2.210
+        server:  "192.168.2.210"
         path: /mnt/MAIN/contain/storage/general
         mountPath: /mnt/general

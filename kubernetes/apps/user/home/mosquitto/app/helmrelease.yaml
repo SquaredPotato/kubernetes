@@ -69,7 +69,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.abchost.nl
-        loadBalancerIP: "192.168.4.196"
+        loadBalancerIP: "${CLUSTER_MOSQUITTO_IP}"
         ports:
           http:
             port: 1883

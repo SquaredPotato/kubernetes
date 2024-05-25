@@ -105,7 +105,7 @@ spec:
         existingClaim: sonarr
       media:
         type: nfs
-        server: 192.168.2.210
+        server:  "192.168.2.210"
         path: /mnt/MAIN/contain/storage/general
         globalMounts:
           - path: /mnt/general

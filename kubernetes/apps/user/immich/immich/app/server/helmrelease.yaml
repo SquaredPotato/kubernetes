@@ -99,7 +99,7 @@ spec:
       library:
         enabled: true
         type: nfs
-        server: 192.168.2.210
+        server:  "192.168.2.210"
         path: /mnt/MAIN/contain/storage/general/immich/library
         mountPath: /usr/src/app/upload/library
       thumbnail:
@@ -110,7 +110,7 @@ spec:
       encoded-video:
         enabled: true
         type: nfs
-        server: 192.168.2.210
+        server:  "192.168.2.210"
         path: /mnt/MAIN/contain/storage/general/immich/encoded-videos
         mountPath: /usr/src/app/upload/encoded-video
       profile:
