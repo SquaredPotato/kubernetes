@@ -13,7 +13,36 @@ customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
   mapping:
+    bw.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    bazarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
+    home.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
+    idrac.lan: "192.168.2.126"
+    immich.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    jelly.abchost.nl: "${LAN_NUC}"
+    lidarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    longhorn.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    marax.lan: "192.168.2.205"
+    mosquitto.abchost.nl: "${CLUSTER_MOSQUITTO_IP}"
+    next.abchost.nl: "${LAN_NUC}"
+    pgadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    postgres.abchost.nl: "${CLUSTER_CLOUDNATIVE_PG_IP}"
+    printer.lan: "192.168.2.200"
+    prowlarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    proxies.abchost.nl: "${LAN_NUC}"
+    ptu.abchost.nl: "${LAN_NUC}"
+    radarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    rancher.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    schokker.dev: "${LAN_NUC}"
+    sh.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    sonarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    tdarr.abchost.nl: "${LAN_TDARR_IP}"
+    torrent.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    truenas.abchost.nl: "${LAN_TRUENAS_IP}"
+    un.abchost.nl: "${LAN_NUC}"
+    univac.lan: "${LAN_NUC}"
+    zigbee.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+
 caching:
   cacheTimeNegative: -1
 blocking:
@@ -42,12 +71,12 @@ blocking:
     default:
       - ads
       - trackers
-redis:
-  required: true
-  address: redis-master
-  database: ${REDIS_BLOCKY_DB}
-  password: {{ .REDIS_PASS }}
-  sentinelAddresses:
-    - redis-node-0.redis-headless.database:26379
-    - redis-node-1.redis-headless.database:26379
-    - redis-node-2.redis-headless.database:26379
+# redis:
+#   required: true
+#   address: redis-master
+#   database: ${REDIS_BLOCKY_DB}
+#   password: { { .REDIS_PASS } }
+#   sentinelAddresses:
+#     - redis-node-0.redis-headless.database:26379
+#     - redis-node-1.redis-headless.database:26379
+#     - redis-node-2.redis-headless.database:26379
