@@ -71,12 +71,11 @@ blocking:
     default:
       - ads
       - trackers
-# redis:
-#   required: true
-#   address: redis-master
-#   database: ${REDIS_BLOCKY_DB}
-#   password: { { .REDIS_PASS } }
-#   sentinelAddresses:
-#     - redis-node-0.redis-headless.database:26379
-#     - redis-node-1.redis-headless.database:26379
-#     - redis-node-2.redis-headless.database:26379
+redis:
+  required: true
+  database: ${REDIS_BLOCKY_DB}
+  sentinelPassword: ${REDIS_PASS}
+  sentinelAddresses:
+    - redis-node-0.redis-headless.database:26379
+    - redis-node-1.redis-headless.database:26379
+    - redis-node-2.redis-headless.database:26379
