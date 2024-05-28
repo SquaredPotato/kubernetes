@@ -3,12 +3,14 @@ ports:
   dns: 53
   tls: 853
   http: 4000
+
 upstreams:
   strategy: strict
   groups:
     default:
       - 1.1.1.1
       - 1.0.0.1
+
 customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
@@ -43,16 +45,41 @@ customDNS:
     univac.lan: "${LAN_NUC}"
     zigbee.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
 
+prometheus:
+  enable: true
+  path: /metrics
+
 caching:
-  cacheTimeNegative: -1
+  minTime: 15m
+  prefetching: true
+  prefetchExpires: 2h
+
 blocking:
   blackLists:
     ads:
-      - https://big.oisd.nl/domainswild
-      - https://raw.githubusercontent.com/mmotti/pihole-regex/master/regex.list
-      - https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Hosts-File.txt
+      - https://adaway.org/hosts.txt
       - https://v.firebog.net/hosts/AdguardDNS.txt
-      - https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt
+      - https://v.firebog.net/hosts/Admiral.txt
+      - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+      - https://v.firebog.net/hosts/Easylist.txt
+      - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
+      - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+      - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
+    malicious: # Ref: https://firebog.net
+      - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+      - https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
+      - https://v.firebog.net/hosts/Prigent-Crypto.txt
+      - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+      - https://bitbucket.org/ethanr/dns-blacklists/raw/master/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
+      - https://phishing.army/download/phishing_army_blocklist_extended.txt
+      - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
+      - https://v.firebog.net/hosts/RPiList-Malware.txt
+      - https://v.firebog.net/hosts/RPiList-Phishing.txt
+      - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+      - https://raw.githubusercontent.com/AssoEchap/stalkerware-indicators/master/generated/hosts
+      - https://urlhaus.abuse.ch/downloads/hostfile/
     trackers:
       - https://v.firebog.net/hosts/Easyprivacy.txt
       - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
@@ -64,18 +91,41 @@ blocking:
       - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/xiaomi
       - https://raw.githubusercontent.com/nextdns/native-tracking-domains/main/domains/sonos
       - https://raw.githubusercontent.com/mullvad/dns-blocklists/main/files/tracker
+      - https://v.firebog.net/hosts/Easyprivacy.txt
+      - https://v.firebog.net/hosts/Prigent-Ads.txt
+      - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+      - https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
+    native: # Ref: https://github.com/hagezi/dns-blocklists
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.amazon.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.apple.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.huawei.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.lgwebos.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.tiktok.extended.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.winoffice.txt
+    other: # Ref: https://firebog.net
+      - https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
+    suspicious: # Ref: https://firebog.net
+      - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
+      - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+      - https://v.firebog.net/hosts/static/w3kbl.txt
+
   whiteLists:
     ads:
       - https://raw.githubusercontent.com/mmotti/pihole-regex/master/whitelist.list
   clientGroupsBlock:
     default:
       - ads
+      - malicious
       - trackers
-redis:
-  required: true
-  database: ${REDIS_BLOCKY_DB}
-  sentinelPassword: ${REDIS_PASS}
-  sentinelAddresses:
-    - redis-node-0.redis-headless.database:26379
-    - redis-node-1.redis-headless.database:26379
-    - redis-node-2.redis-headless.database:26379
+      - native
+      - other
+      - suspicious
+
+# redis:
+#   required: true
+#   database: ${REDIS_BLOCKY_DB}
+#   sentinelPassword: ${REDIS_PASS}
+#   sentinelAddresses:
+#     - redis-node-0.redis-headless.database:26379
+#     - redis-node-1.redis-headless.database:26379
+#     - redis-node-2.redis-headless.database:26379
