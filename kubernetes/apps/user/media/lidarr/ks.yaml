@@ -8,6 +8,7 @@ spec:
   dependsOn:
     - name: apps-longhorn
     - name: apps-prowlarr
+    - name: apps-qbittorrent
     - name: cluster-apps-cloudnative-pg-cluster
   path: ./kubernetes/apps/user/media/lidarr/app
   prune: true
