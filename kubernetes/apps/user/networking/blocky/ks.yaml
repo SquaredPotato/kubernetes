@@ -14,3 +14,12 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: blocky-database-secret
+        namespace: networking

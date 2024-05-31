@@ -36,12 +36,20 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+          # ui:
+          #   image:
+          #     repository: ghcr.io/mozart409/blocky-frontend
+          #     tag: v0.2.1
+
     service:
       main:
         controller: main
+        enabled: true
         ports:
           http:
             port: 4000
+          # ui:
+          #   port: 8000
       dns:
         controller: main
         type: LoadBalancer
@@ -54,6 +62,38 @@ spec:
           dns-udp:
             port: 53
             protocol: UDP
+          dns-tls-tcp:
+            port: 853
+            protocol: TCP
+          dns-tls-udp:
+            port: 853
+            protocol: UDP
+    # ingress:
+    #   ui:
+    #     className: internal
+    #     annotations:
+    #       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    #     hosts:
+    #       - host: &host "{{ .Release.Name }}.abchost.nl"
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: app
+    #               port: ui
+    #             pathType: Prefix
+    #     tls:
+    #       - hosts:
+    #         - *host
+    serviceMonitor:
+      main:
+        enabled: true
+        serviceName: blocky
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 30s
+            scrapeTimeout: 10s
     persistence:
       config:
         type: configMap
@@ -61,5 +101,7 @@ spec:
         globalMounts:
           - path: /app/config.yml
             subPath: config.yml
-            readOnly: true
+            readOnly: false
+
+
 

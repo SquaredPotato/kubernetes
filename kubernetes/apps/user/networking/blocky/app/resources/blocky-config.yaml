@@ -1,11 +1,10 @@
----
 ports:
   dns: 53
   tls: 853
   http: 4000
 
 upstreams:
-  strategy: strict
+  strategy: parallel_best
   groups:
     default:
       - 1.1.1.1
@@ -121,11 +120,17 @@ blocking:
       - other
       - suspicious
 
-# redis:
-#   required: true
-#   database: ${REDIS_BLOCKY_DB}
-#   sentinelPassword: ${REDIS_PASS}
-#   sentinelAddresses:
-#     - redis-node-0.redis-headless.database:26379
-#     - redis-node-1.redis-headless.database:26379
-#     - redis-node-2.redis-headless.database:26379
+redis:
+  required: true
+  database: ${REDIS_BLOCKY_DB}
+  sentinelPassword: ${REDIS_PASS}
+  sentinelAddresses:
+    - redis-node-0.redis-headless.database:26379
+    - redis-node-1.redis-headless.database:26379
+    - redis-node-2.redis-headless.database:26379
+
+queryLog:
+  type: postgresql
+  target: "postgresql://blocky:${BLOCKY_POSTGRES_PASS}@postgres-rw.database:5432/blocky"
+  logRetentionDays: 1
+
