@@ -36,11 +36,17 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-          # ui:
-          #   image:
-          #     repository: ghcr.io/mozart409/blocky-frontend
-          #     tag: v0.2.1
-
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                - NET_BIND_SERVICE
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
     service:
       main:
         controller: main
@@ -99,9 +105,9 @@ spec:
         type: configMap
         name: blocky-config
         globalMounts:
-          - path: /app/config.yml
-            subPath: config.yml
-            readOnly: false
+        - path: /app/config.yml
+          subPath: config.yml
+
 
 
 
