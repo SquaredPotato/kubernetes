@@ -4,9 +4,9 @@ resources:
   - ./helmrelease.yaml
 configMapGenerator:
   - name: blocky-config
-    namespace: networking
     behavior: create
+    namespace: networking
     files:
-      - ./resources/blocky-config.yaml
+      - config.yml=./resources/blocky-config.yaml
 generatorOptions:
   disableNameSuffixHash: true
