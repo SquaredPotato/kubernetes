@@ -55,6 +55,10 @@ caching:
 
 blocking:
   blackLists:
+    platforms:
+      - https://raw.githubusercontent.com/jmdugan/blocklists/master/corporations/facebook/all-but-whatsapp
+      - https://ente.dev/api/blocklist/tiktok
+      - https://ente.dev/api/blocklist/google-amp
     ads:
       - https://adaway.org/hosts.txt
       - https://v.firebog.net/hosts/AdguardDNS.txt
@@ -66,6 +70,8 @@ blocking:
       - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
       - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
       - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
+      - https://ente.dev/api/blocklist/advertising
+      - https://ente.dev/api/blocklist/youtube-advertising
     malicious: # Ref: https://firebog.net
       - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
       - https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
@@ -95,6 +101,7 @@ blocking:
       - https://v.firebog.net/hosts/Prigent-Ads.txt
       - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
       - https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
+      - https://ente.dev/api/blocklist/tracking
     native: # Ref: https://github.com/hagezi/dns-blocklists
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.amazon.txt
       - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/native.apple.txt
@@ -108,12 +115,14 @@ blocking:
       - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
       - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
       - https://v.firebog.net/hosts/static/w3kbl.txt
+      - https://ente.dev/api/blocklist/suspicious
 
   whiteLists:
     ads:
       - https://raw.githubusercontent.com/mmotti/pihole-regex/master/whitelist.list
   clientGroupsBlock:
     default:
+      - platforms
       - ads
       - malicious
       - trackers
