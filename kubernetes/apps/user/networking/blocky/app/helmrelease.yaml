@@ -48,18 +48,13 @@ spec:
             image:
               repository: ghcr.io/mozart409/blocky-frontend
               tag: v0.2.1
+            env:
+              - name: API_URL
+                value: "http://{{ .Release.Name }}.networking:4000"
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
     service:
-      main:
-        controller: main
-        enabled: true
-        ports:
-          http:
-            port: 4000
-          ui:
-            port: 8002
       dns:
         controller: main
         type: LoadBalancer
@@ -78,11 +73,29 @@ spec:
           dns-tls-udp:
             port: 853
             protocol: UDP
+          http:
+            port: 4000
           ui:
             enabled: true
             port: 8002
             protocol: TCP
             targetPort: 8002
+    ingress:
+      dns:
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.abchost.nl"
+            paths:
+              - path: /
+                service:
+                  identifier: dns
+                  port: ui
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     serviceMonitor:
       main:
         enabled: true

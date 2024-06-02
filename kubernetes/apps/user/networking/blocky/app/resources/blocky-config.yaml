@@ -16,6 +16,7 @@ customDNS:
   mapping:
     bw.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     bazarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    blocky.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
     home.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     idrac.lan: "192.168.2.126"
@@ -70,8 +71,6 @@ blocking:
       - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
       - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
       - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
-      - https://ente.dev/api/blocklist/advertising
-      - https://ente.dev/api/blocklist/youtube-advertising
     malicious: # Ref: https://firebog.net
       - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
       - https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
@@ -120,6 +119,7 @@ blocking:
   whiteLists:
     ads:
       - https://raw.githubusercontent.com/mmotti/pihole-regex/master/whitelist.list
+      - https://gist.github.com/captainhook/9eb4132d6e58888e37c6bc6c73dd4e60/raw/34caa169dccbb5814b08abe224e01ebdb7cedd67/SpotifyWhitelist
   clientGroupsBlock:
     default:
       - platforms
