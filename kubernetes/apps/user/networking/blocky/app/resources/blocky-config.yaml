@@ -114,7 +114,6 @@ blocking:
       - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
       - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
       - https://v.firebog.net/hosts/static/w3kbl.txt
-      - https://ente.dev/api/blocklist/suspicious
 
   whiteLists:
     ads:
