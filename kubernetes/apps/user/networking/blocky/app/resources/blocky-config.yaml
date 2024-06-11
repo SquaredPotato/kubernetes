@@ -14,7 +14,7 @@ customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
   mapping:
-    bw.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    bw.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     bazarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     blocky.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
