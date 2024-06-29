@@ -1,0 +1,372 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app immich
+  namespace: immich
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+
+      server:
+        replicas: 1
+        strategy: RollingUpdate
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: server
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.106.4
+            envFrom:
+              - secretRef:
+                  name: immich
+              - configMapRef:
+                  name: immich
+            env:
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_DB
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_USER
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_PASSWORD
+              REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+              IMMICH_PORT: &server-port 3001
+              IMMICH_WORKERS_INCLUDE: 'api'
+            probes:
+              liveness: &server-probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server-info/ping
+                    port: *server-port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *server-probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/server-info/ping
+                    port: *server-port
+                  failureThreshold: 30
+                  periodSeconds: 5
+                  successThreshold: 1
+                  timeoutSeconds: 1
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+
+      microservices:
+        replicas: 1
+        strategy: RollingUpdate
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: microservices
+          securityContext:
+            supplementalGroups: [44, 109]
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.106.4
+            envFrom:
+              - secretRef:
+                  name: immich
+              - configMapRef:
+                  name: immich
+            env:
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_DB
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_USER
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_PASSWORD
+              REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+              IMMICH_PORT: *server-port
+              IMMICH_WORKERS_EXCLUDE: 'api'
+            # probes:
+            #   liveness: &server-probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /api/server-info/ping
+            #         port: *api-port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *server-probes
+            #   startup:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /api/server-info/ping
+            #         port: *api-port
+            #       failureThreshold: 30
+            #       periodSeconds: 5
+            #       successThreshold: 1
+            #       timeoutSeconds: 1
+
+      machine-learning:
+        replicas: 3
+        strategy: RollingUpdate
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: machine-learning
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.106.4
+            envFrom:
+              - secretRef:
+                  name: immich
+              - configMapRef:
+                  name: immich
+            env:
+              TRANSFORMERS_CACHE: /cache
+              IMMICH_PORT: &maching-learning-port 3003
+            # probes:
+            #   liveness: &server-probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /api/server-info/ping
+            #         port: *api-port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *server-probes
+            #   startup:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /api/server-info/ping
+            #         port: *api-port
+            #       failureThreshold: 30
+            #       periodSeconds: 5
+            #       successThreshold: 1
+            #       timeoutSeconds: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                cpu: 2000m
+                memory: 4Gi
+
+      database:
+        replicas: 1
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: tensorchord/pgvecto-rs
+              tag: pg15-v0.2.0
+            env:
+              PGDATA: /postgres/data
+            envFrom:
+              - secretRef:
+                  name: immich-database
+            probes:
+              liveness: &database-probes
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - 'exec pg_isready -U $POSTGRES_USER -d "dbname=$POSTGRES_DB" -h 127.0.0.1 -p 5432'
+              readiness: *database-probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+
+    service:
+      server:
+        controller: server
+        ports:
+          http:
+            port: *server-port
+      machine-learning:
+        controller: machine-learning
+        ports:
+          http:
+            port: *maching-learning-port
+      database:
+        controller: database
+        ports:
+          postgres:
+            port: 5432
+            primary: true
+            protocol: TCP
+    ingress:
+      internal:
+        enabled: true
+        className: internal
+        annotations: &ingress-annotations
+          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        hosts:
+          - host: &host immich.abchost.nl
+            paths:
+              - path: /
+                service:
+                  identifier: server
+                  port: http
+        tls:
+          - hosts:
+              - *host
+      external:
+        enabled: true
+        className: external
+        annotations: *ingress-annotations
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: server
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      library:
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/contain/storage/general/immich/library
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/library
+          microservices:
+            app:
+              - path: /usr/src/app/upload/library
+      thumbnail:
+        existingClaim: immich-thumbs
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/thumbs
+          microservices:
+            app:
+              - path: /usr/src/app/upload/thumbs
+      encoded-video:
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/contain/storage/general/immich/encoded-videos
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/encoded-video
+          microservices:
+            app:
+              - path: /usr/src/app/upload/encoded-video
+      profile:
+        existingClaim: immich-profile
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/profile
+          microservices:
+            app:
+              - path: /usr/src/app/upload/profile
+      upload:
+        existingClaim: immich-upload
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/upload
+          microservices:
+            app:
+              - path: /usr/src/app/upload/upload
+      microservices:
+        existingClaim: immich-microservices
+        advancedMounts:
+          microservices:
+            app:
+              - path: /geodata-cache
+      machine-learning:
+        existingClaim: immich-machine-learning
+        advancedMounts:
+          machine-learning:
+            app:
+              - path: /cache
+      database:
+        existingClaim: immich-database
+        advancedMounts:
+          database:
+            app:
+              - path: /postgres
