@@ -20,7 +20,7 @@ customDNS:
     dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
     home.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     idrac.lan: "192.168.2.126"
-    immich.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    immich.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     jelly.abchost.nl: "${LAN_NUC}"
     lidarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     longhorn.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"

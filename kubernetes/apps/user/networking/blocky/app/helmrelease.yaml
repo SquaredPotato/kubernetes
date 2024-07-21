@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: blocky
+  name: &app blocky
   namespace: networking
 spec:
   interval: 5m
@@ -16,21 +16,29 @@ spec:
         namespace: flux-system
   values:
     controllers:
-      main:
+      blocky:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/0xerr0r/blocky
-              tag: v0.24
+              tag: v0.24@sha256:9a82e0235c52ef3048586f8006add06e52132adaae70d02f980569dae16421a2
+            env:
+              TZ: "Europe/Amsterdam"
             probes:
-              liveness:
+              liveness:  &probe
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: &port 53
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness: *probe
               startup:
                 enabled: true
                 spec:
@@ -38,25 +46,24 @@ spec:
                   periodSeconds: 5
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               capabilities:
                 add:
                 - NET_BIND_SERVICE
                 drop:
                 - ALL
-              readOnlyRootFilesystem: true
-          ui:
-            image:
-              repository: ghcr.io/mozart409/blocky-frontend
-              tag: v0.2.1
-            env:
-              - name: API_URL
-                value: "http://{{ .Release.Name }}.networking:4000"
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
     service:
+      app:
+        controller: *app
+        nameOverride: *app
+        ports:
+          http:
+            port: 4000
       dns:
-        controller: main
+        controller: *app
         type: LoadBalancer
         loadBalancerIP: "${CLUSTER_BLOCKY_IP}"
         externalTrafficPolicy: Local
@@ -73,39 +80,32 @@ spec:
           dns-tls-udp:
             port: 853
             protocol: UDP
-          http:
-            port: 4000
-          ui:
-            enabled: true
-            port: 8002
-            protocol: TCP
-            targetPort: 8002
-    ingress:
-      dns:
-        className: internal
-        annotations:
-          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        hosts:
-          - host: &host "{{ .Release.Name }}.abchost.nl"
-            paths:
-              - path: /
-                service:
-                  identifier: dns
-                  port: ui
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     serviceMonitor:
-      main:
+      app:
         enabled: true
-        serviceName: blocky
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
             path: /metrics
             interval: 30s
             scrapeTimeout: 10s
+    ingress:
+      app:
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        hosts:
+          - host: &host "blocky-backend.abchost.nl"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
         type: configMap
