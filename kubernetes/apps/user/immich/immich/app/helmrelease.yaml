@@ -64,6 +64,11 @@ spec:
                   secretKeyRef:
                     name: immich-database
                     key: POSTGRES_PASSWORD
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_URL
               REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
               IMMICH_PORT: &server-port 3001
               IMMICH_WORKERS_INCLUDE: 'api'
@@ -137,6 +142,11 @@ spec:
                   secretKeyRef:
                     name: immich-database
                     key: POSTGRES_PASSWORD
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_URL
               REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
               IMMICH_PORT: *server-port
               IMMICH_WORKERS_EXCLUDE: 'api'
