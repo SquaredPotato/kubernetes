@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: apps-longhorn
+    - name: cluster-apps-longhorn
   path: ./kubernetes/apps/user/torrent-clients/qbittorrent/app
   prune: true
   sourceRef:

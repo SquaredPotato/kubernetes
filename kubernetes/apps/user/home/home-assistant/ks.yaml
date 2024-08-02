@@ -8,7 +8,7 @@ spec:
   path: ./kubernetes/apps/user/home/home-assistant/app
   prune: true
   dependsOn:
-    - name: apps-longhorn
+    - name: cluster-apps-longhorn
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

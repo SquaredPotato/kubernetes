@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: apps-longhorn
+    - name: cluster-apps-longhorn
     - name: cluster-apps-redis
   path: ./kubernetes/apps/user/immich/immich/app
   prune: true

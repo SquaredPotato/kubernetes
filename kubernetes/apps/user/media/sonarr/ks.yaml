@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: apps-longhorn
+    - name: cluster-apps-longhorn
     - name: apps-prowlarr
     - name: apps-qbittorrent
     - name: cluster-apps-cloudnative-pg-cluster

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: apps-longhorn
+    - name: cluster-apps-longhorn
   path: ./kubernetes/apps/user/media/bazarr/app
   prune: true
   sourceRef:
