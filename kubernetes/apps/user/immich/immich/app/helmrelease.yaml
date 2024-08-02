@@ -231,36 +231,36 @@ spec:
                 cpu: 2000m
                 memory: 4Gi
 
-      database:
-        replicas: 1
-        strategy: Recreate
-        containers:
-          app:
-            image:
-              repository: tensorchord/pgvecto-rs
-              tag: pg15-v0.2.0
-            env:
-              PGDATA: /postgres/data
-            envFrom:
-              - secretRef:
-                  name: immich-database
-            probes:
-              liveness: &database-probes
-                enabled: true
-                custom: true
-                spec:
-                  exec:
-                    command:
-                      - /bin/sh
-                      - -c
-                      - 'exec pg_isready -U $POSTGRES_USER -d "dbname=$POSTGRES_DB" -h 127.0.0.1 -p 5432'
-              readiness: *database-probes
-            resources:
-              requests:
-                cpu: 10m
-                memory: 128Mi
-              limits:
-                memory: 256Mi
+      # database:
+      #   replicas: 1
+      #   strategy: Recreate
+      #   containers:
+      #     app:
+      #       image:
+      #         repository: tensorchord/pgvecto-rs
+      #         tag: pg15-v0.2.0
+      #       env:
+      #         PGDATA: /postgres/data
+      #       envFrom:
+      #         - secretRef:
+      #             name: immich-database
+      #       probes:
+      #         liveness: &database-probes
+      #           enabled: true
+      #           custom: true
+      #           spec:
+      #             exec:
+      #               command:
+      #                 - /bin/sh
+      #                 - -c
+      #                 - 'exec pg_isready -U $POSTGRES_USER -d "dbname=$POSTGRES_DB" -h 127.0.0.1 -p 5432'
+      #         readiness: *database-probes
+      #       resources:
+      #         requests:
+      #           cpu: 10m
+      #           memory: 128Mi
+      #         limits:
+      #           memory: 256Mi
 
     service:
       server:
@@ -273,13 +273,13 @@ spec:
         ports:
           http:
             port: *maching-learning-port
-      database:
-        controller: database
-        ports:
-          postgres:
-            port: 5432
-            primary: true
-            protocol: TCP
+      # database:
+      #   controller: database
+      #   ports:
+      #     postgres:
+      #       port: 5432
+      #       primary: true
+      #       protocol: TCP
     ingress:
       internal:
         enabled: true
@@ -374,9 +374,9 @@ spec:
           machine-learning:
             app:
               - path: /cache
-      database:
-        existingClaim: immich-database
-        advancedMounts:
-          database:
-            app:
-              - path: /postgres
+      # database:
+      #   existingClaim: immich-database
+      #   advancedMounts:
+      #     database:
+      #       app:
+      #         - path: /postgres
