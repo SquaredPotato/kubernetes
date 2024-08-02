@@ -64,9 +64,9 @@ spec:
           http:
             port: 80
     ingress:
-      main:
+      internal:
         enabled: true
-        ingressClassName: "internal"
+        className: "internal"
         hosts:
           - host: &host "pgadmin.abchost.nl"
             paths:
@@ -74,6 +74,9 @@ spec:
                 service:
                   name: main
                   port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       # Configure the main configuration storage location
       config:
