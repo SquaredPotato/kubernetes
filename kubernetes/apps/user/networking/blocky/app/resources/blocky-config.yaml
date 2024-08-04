@@ -140,6 +140,6 @@ redis:
 
 queryLog:
   type: postgresql
-  target: "postgresql://blocky:${BLOCKY_POSTGRES_PASS}@postgres-rw.database:5432/blocky"
+  target: "postgresql://blocky:${BLOCKY_POSTGRES_PASS}@postgres16-rw.database:5432/blocky"
   logRetentionDays: 1
 
