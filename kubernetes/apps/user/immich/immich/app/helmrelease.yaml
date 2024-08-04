@@ -28,6 +28,8 @@ spec:
     controllers:
 
       server:
+        annotations:
+          reloader.stakater.com/auto: "true"
         replicas: 1
         strategy: RollingUpdate
         pod:
@@ -104,6 +106,8 @@ spec:
                 memory: 1Gi
 
       microservices:
+        annotations:
+            reloader.stakater.com/auto: "true"
         replicas: 1
         strategy: RollingUpdate
         pod:
@@ -176,6 +180,8 @@ spec:
             #       timeoutSeconds: 1
 
       machine-learning:
+        annotations:
+          reloader.stakater.com/auto: "true"
         replicas: 3
         strategy: RollingUpdate
         pod:
