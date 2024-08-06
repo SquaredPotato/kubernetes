@@ -27,7 +27,7 @@ spec:
       secret:
         name: cloudnative-pg-app-user
     # recovery:
-    #   source: &previousCluster postgres-v3
+    #   source: &previousCluster postgres16-v0
   postgresql:
     parameters:
       max_connections: "600"
