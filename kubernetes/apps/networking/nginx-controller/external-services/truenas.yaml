@@ -9,8 +9,8 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  # These should point to the actual DNS service
-  externalName: pi.hole
+  # These should point to the actual service
+  externalName: "truenas.abchost.nl"
   ports:
   - port: 80
 ---
@@ -26,9 +26,11 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: internal
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   rules:
     # These are the ingress rules
-    - host: nas.abchost.nl
+    - host: &host nas.abchost.nl
       http:
         paths:
           - path: /
@@ -37,4 +39,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 91
+                  number: 443
+      tls:
+          - hosts:
+              - *host
