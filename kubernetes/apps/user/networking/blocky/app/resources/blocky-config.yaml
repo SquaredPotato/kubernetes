@@ -121,6 +121,9 @@ blocking:
     ads:
       - https://raw.githubusercontent.com/mmotti/pihole-regex/master/whitelist.list
       - https://gist.github.com/captainhook/9eb4132d6e58888e37c6bc6c73dd4e60/raw/34caa169dccbb5814b08abe224e01ebdb7cedd67/SpotifyWhitelist
+    malicious:
+      - |
+        discord.com
   clientGroupsBlock:
     default:
       - platforms
