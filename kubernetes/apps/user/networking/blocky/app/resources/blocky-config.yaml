@@ -29,7 +29,7 @@ customDNS:
     next.abchost.nl: "${LAN_NUC}"
     pgadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     postgres.abchost.nl: "${CLUSTER_CLOUDNATIVE_PG_IP}"
-    printer.lan: "192.168.2.200"
+    printer.lan: "192.168.5.6"
     prowlarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     proxies.abchost.nl: "${LAN_NUC}"
     ptu.abchost.nl: "${LAN_NUC}"
