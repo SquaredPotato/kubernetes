@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/lidarr
-              tag: 2.4.3.4248@sha256:9c982cdb696b4b2437bd2b622afd2b6de110cb113f0aba411327544cf645b26c
+              tag: 2.4.3.4248@sha256:401aec97ad0f0fc26f87f73ae793b981b849c71cd1e4278b60b2a5a8c4507914
             env:
               COMPlus_EnableDiagnostics: "0"
               LIDARR__AUTHENTICATION_METHOD: External
