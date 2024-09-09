@@ -9,7 +9,7 @@ spec:
     - name: cluster-apps-longhorn
     - name: apps-prowlarr
     - name: apps-qbittorrent
-    - name: cluster-apps-cloudnative-pg-cluster
+    - name: cluster-apps-cloudnative-pg-cluster16
   path: ./kubernetes/apps/user/media/radarr/app
   prune: true
   sourceRef:

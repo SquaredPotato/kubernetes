@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-cloudnative-pg-cluster
+    - name: cluster-apps-cloudnative-pg-cluster16
   path: ./kubernetes/apps/user/utilities/atuin/app
   prune: true
   sourceRef:

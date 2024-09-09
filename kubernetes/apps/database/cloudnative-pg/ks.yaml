@@ -49,7 +49,7 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-cloudnative-pg-cluster
+    - name: cluster-apps-cloudnative-pg-cluster16
   interval: 30m
   retryInterval: 1m
   timeout: 5m
