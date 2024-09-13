@@ -40,6 +40,9 @@ spec:
               LIDARR__PORT: &port 80
               LIDARR__LOG_LEVEL: info
               LIDARR__THEME: "dark"
+              PUID: 101000
+              PGID: 101000
+              UMASK: 002
               TZ: "Europe/Amsterdam"
             envFrom:
               - secretRef:
@@ -58,22 +61,22 @@ spec:
                   failureThreshold: 5
               readiness: *probes
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
               limits:
                 memory: 1Gi
-        pod:
-          securityContext:
-            runAsUser: 101000
-            runAsGroup: 101000
-            runAsNonRoot: true
-            fsGroup: 101000
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [10000]
+        # pod:
+          # securityContext:
+            # runAsUser: 101000
+            # runAsGroup: 101000
+            # runAsNonRoot: true
+            # fsGroup: 101000
+            # fsGroupChangePolicy: OnRootMismatch
+            # supplementalGroups: [10000]
     service:
       app:
         controller: lidarr
@@ -101,6 +104,10 @@ spec:
           - hosts:
               - *host
     persistence:
+      run:
+        type: emptyDir
+        globalMounts:
+          - path: /run
       config:
         existingClaim: lidarr
       media:
