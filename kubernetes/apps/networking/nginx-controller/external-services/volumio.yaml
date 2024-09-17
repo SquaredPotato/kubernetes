@@ -8,11 +8,11 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
-  type: ExternalName
   # These should point to the actual service
-  externalName: "192.168.5.3"
+  externalIPs:
+  - ${LAN_VOLUMIO}
   ports:
-  - port: 80
+  - port: 443
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -26,6 +26,8 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: internal
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   rules:
     # These are the ingress rules
     - host: &host volumio.abchost.nl
@@ -39,5 +41,5 @@ spec:
                 port:
                   number: 443
       tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host

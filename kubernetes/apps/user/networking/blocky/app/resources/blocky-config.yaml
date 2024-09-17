@@ -44,7 +44,7 @@ customDNS:
     nas.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     un.abchost.nl: "${LAN_NUC}"
     univac.lan: "${LAN_NUC}"
-    volumio.abchost.nl: "192.168.5.3"
+    volumio.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     zigbee.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
 
 prometheus:
