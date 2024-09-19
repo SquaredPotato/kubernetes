@@ -26,6 +26,7 @@ customDNS:
     longhorn.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     marax.lan: "192.168.2.205"
     mosquitto.abchost.nl: "${CLUSTER_MOSQUITTO_IP}"
+    zolderpi.abchost.nl: "${LAN_VOLUMIO}"
     next.abchost.nl: "${LAN_NUC}"
     pgadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     postgres.abchost.nl: "${CLUSTER_CLOUDNATIVE_PG_IP}"

@@ -8,11 +8,13 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
-  # These should point to the actual service
-  externalIPs:
-  - ${LAN_TRUENAS_IP}
+  type: ExternalName
+  externalName: truenas.abchost.nl
   ports:
-  - port: 443
+    - name: http
+      port: &port 80
+      protocol: TCP
+      targetPort: *port
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
