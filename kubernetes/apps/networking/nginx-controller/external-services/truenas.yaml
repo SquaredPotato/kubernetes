@@ -33,7 +33,7 @@ metadata:
   name: &app external-truenas-ingress
   namespace: ingress
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -41,7 +41,6 @@ spec:
   ingressClassName: internal
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   rules:
     - host: &host nas.abchost.nl
       http:

@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: ingress
 resources:
   - ./truenas.yaml
-  - ./volumio.yaml
+  - ./jellyfin.yaml
