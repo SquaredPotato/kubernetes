@@ -2,19 +2,30 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app external-volumio-ingress
+  name: external-volumio-ingress
   namespace: ingress
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
 spec:
-  type: ExternalName
-  externalName: "zolderpi.abchost.nl"
   ports:
     - name: http
       port: &port 80
       protocol: TCP
       targetPort: *port
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: external-volumio-ingress-endpoint
+  labels:
+    kubernetes.io/service-name: external-volumio-ingress
+addressType: IPv4
+ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    port: 80
+endpoints:
+  - addresses:
+      - ${LAN_VOLUMIO}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -26,12 +37,12 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
+    kubernetes.io/service-name: *app
 spec:
   ingressClassName: internal
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   rules:
-    # These are the ingress rules
     - host: &host volumio.abchost.nl
       http:
         paths:
@@ -41,7 +52,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 443
+                  number: 80
       tls:
         - hosts:
           - *host

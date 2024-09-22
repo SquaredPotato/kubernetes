@@ -6,21 +6,26 @@ metadata:
   namespace: ingress
 spec:
   ports:
-    - name: http
-      port: &port 80
+    - name: https
+      port: &port 443
       protocol: TCP
       targetPort: *port
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: external-truenas-ingress
+  name: external-truenas-ingress-endpoint
+  labels:
+    kubernetes.io/service-name: external-truenas-ingress
 addressType: IPv4
 ports:
-  - port: 80
+  - name: https
+    appProtocol: https
+    protocol: TCP
+    port: 443
 endpoints:
   - addresses:
-    - ${LAN_TRUENAS_IP}
+      - ${LAN_TRUENAS_IP}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -36,8 +41,8 @@ spec:
   ingressClassName: internal
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   rules:
-    # These are the ingress rules
     - host: &host nas.abchost.nl
       http:
         paths:
@@ -46,6 +51,7 @@ spec:
             backend:
               service:
                 name: *app
+                protocol: https
                 port:
                   number: 443
       tls:
