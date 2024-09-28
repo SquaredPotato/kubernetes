@@ -5,3 +5,4 @@ namespace: ingress
 resources:
   - ./truenas.yaml
   - ./jellyfin.yaml
+  - ./nextcloud.yaml
