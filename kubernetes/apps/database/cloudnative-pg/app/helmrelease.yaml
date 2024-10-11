@@ -25,9 +25,3 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    crds:
-      create: true
-    config:
-      data:
-        INHERITED_ANNOTATIONS: kyverno.io/ignore

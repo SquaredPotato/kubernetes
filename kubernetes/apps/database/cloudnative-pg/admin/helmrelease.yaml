@@ -78,6 +78,13 @@ spec:
           - hosts:
               - *host
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       # Configure the main configuration storage location
       config:
         enabled: true

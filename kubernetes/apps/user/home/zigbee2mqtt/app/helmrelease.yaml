@@ -115,5 +115,12 @@ spec:
         tls:
           - hosts: [*host]
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       config:
         existingClaim: zigbee2mqtt

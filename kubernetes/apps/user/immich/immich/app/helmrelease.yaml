@@ -319,6 +319,13 @@ spec:
               - *host
 
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       library:
         type: nfs
         server: "${LAN_TRUENAS_IP}"

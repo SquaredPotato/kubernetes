@@ -75,6 +75,13 @@ spec:
                   identifier: app
                   port: http
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       config:
         existingClaim: home-assistant
       logs:

@@ -107,6 +107,13 @@ spec:
           - hosts:
               - *host
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       config:
         type: configMap
         name: blocky-config

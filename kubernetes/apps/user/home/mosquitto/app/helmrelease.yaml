@@ -76,6 +76,13 @@ spec:
           http:
             port: 1883
     persistence:
+      time:
+        enabled: true
+        type: hostPath
+        hostPath: /etc/localtime
+        globalMounts:
+          - path: /etc/localtime
+            readOnly: true
       data:
         existingClaim: mosquitto
       config-file:
