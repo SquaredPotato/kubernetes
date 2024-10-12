@@ -24,4 +24,5 @@ data:
 # Redis DB id's
   REDIS_IMMICH_DB: "1"
   REDIS_BLOCKY_DB: "2"
+  REDIS_AUTHENTIK_DB: "3"
 
