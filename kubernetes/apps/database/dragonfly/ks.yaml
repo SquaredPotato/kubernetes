@@ -33,8 +33,8 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  dependsOn:
-    - name: cluster-apps-dragonfly-operator
+  # dependsOn:
+  #   - name: cluster-apps-dragonfly-operator
   prune: true
   wait: false
   interval: 10m
