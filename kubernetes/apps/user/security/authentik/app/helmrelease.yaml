@@ -27,7 +27,7 @@ spec:
             name: *secret
     authentik:
       redis:
-        host: redis-headless.database.svc.cluster.local
+        host: dragonfly.database.svc.cluster.local
         db: ${REDIS_AUTHENTIK_DB}
     server:
       metrics:
