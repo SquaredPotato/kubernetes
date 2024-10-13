@@ -24,6 +24,8 @@ kind: Kustomization
 metadata:
   name: cluster-apps-dragonfly-cluster
   namespace: flux-system
+dependsOn:
+  - name: cluster-apps-dragonfly-operator
 spec:
   targetNamespace: database
   commonMetadata:

@@ -4,6 +4,10 @@ kind: Kustomization
 metadata:
   name: user-apps-authentik
   namespace: flux-system
+dependsOn:
+  - name: cluster-apps-cloudnative-pg-cluster16
+  - name: cluster-apps-dragonfly-cluster
+  - name: cluster-apps-dragonfly-operator
 spec:
   path: ./kubernetes/apps/user/security/authentik/app
   prune: true
