@@ -63,6 +63,17 @@ spec:
           http:
             port: 8123
     ingress:
+      webhook:
+        className: external
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        hosts:
+          - host: home.abchost.nl
+            paths:
+            - path: /api/webhook/
+              service:
+                  identifier: app
+                  port: http
       app:
         className: external
         annotations:
