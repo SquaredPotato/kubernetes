@@ -43,7 +43,7 @@ customDNS:
     torrent.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     truenas.abchost.nl: "${LAN_TRUENAS_IP}"
     nas.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
-    un.abchost.nl: "${LAN_NUC}"
+    un.abchost.nl: "${LAN_CLOUD_KEY_IP}"
     univac.lan: "${LAN_NUC}"
     volumio.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     zigbee.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
