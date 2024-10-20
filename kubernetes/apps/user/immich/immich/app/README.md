@@ -1,4 +1,8 @@
 # immich-secret.sops.yaml layout
+
+>[!NOTE] DEPRECATED
+> I've migrated to dragonfly, settings for which can be found in `immich-configmap.yaml`
+
 ```yaml
 apiVersion: v1
 kind: Secret

@@ -9,4 +9,7 @@ data:
     IMMICH_WEB_URL: http://immich-web:3000
     DB_HOSTNAME: immich-database
     DB_PORT: "5432"
+    REDIS_HOSTNAME: "dragonfly.database.svc.cluster.local"
+    REDIS_PORT: "6379"
+    REDIS_DBINDEX: "1"
     TZ: Europe/Amsterdam

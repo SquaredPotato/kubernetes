@@ -4,6 +4,6 @@ kind: Kustomization
 namespace: immich
 resources:
   - ./immich-configmap.yaml
-  - ./immich-secret.sops.yaml
+  # - ./immich-secret.sops.yaml
   - ./postgres-secret.sops.yaml
   - ./helmrelease.yaml

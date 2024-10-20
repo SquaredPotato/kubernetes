@@ -7,7 +7,9 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-longhorn
-    - name: cluster-apps-redis
+    - name: cluster-apps-cloudnative-pg-cluster16
+    - name: cluster-apps-dragonfly-cluster
+    - name: cluster-apps-dragonfly-operator
   path: ./kubernetes/apps/user/immich/immich/app
   prune: true
   sourceRef:
