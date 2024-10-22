@@ -157,7 +157,8 @@ spec:
       external:
         enabled: true
         className: external
-        annotations: *ingress-annotations
+        annotations:
+          nginx.ingress.kubernetes.io/force-ssl-redirect: true
         hosts:
           - host: *host
             paths:
