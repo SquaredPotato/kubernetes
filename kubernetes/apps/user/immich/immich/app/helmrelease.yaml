@@ -70,7 +70,6 @@ spec:
                     key: POSTGRES_URL
               REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
               IMMICH_PORT: &server-port 2283
-              IMMICH_WORKERS_INCLUDE: 'api'
             probes:
               liveness: &server-probes
                 enabled: true
