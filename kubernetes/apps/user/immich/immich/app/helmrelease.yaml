@@ -158,7 +158,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          nginx.ingress.kubernetes.io/force-ssl-redirect: true
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         hosts:
           - host: &host immich.abchost.nl
             paths:
