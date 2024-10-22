@@ -160,7 +160,7 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: true
         hosts:
-          - host: *host
+          - host: &host immich.abchost.nl
             paths:
               - path: /
                 service:
