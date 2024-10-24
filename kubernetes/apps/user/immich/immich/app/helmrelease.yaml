@@ -97,14 +97,66 @@ spec:
                   timeoutSeconds: 1
             resources:
               requests:
-                cpu: 10m
-                memory: 256Mi
-              limits:
+                cpu: 100m
                 memory: 1Gi
 
+      microservices:
+        replicas: 1
+        strategy: RollingUpdate
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: microservices
+          securityContext:
+            supplementalGroups: [44, 109]
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: *immich-version
+            envFrom:
+              - configMapRef:
+                  name: immich
+            env:
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_DB
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_USER
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_PASSWORD
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-database
+                    key: POSTGRES_URL
+              REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
+              IMMICH_PORT: *server-port
+              IMMICH_WORKERS_EXCLUDE: 'api'
+            # probes:
+            #   startup:
+            #     enabled: true
+            #     spec:
+            #       failureThreshold: 30
+            #       periodSeconds: 5
+            #   liveness:
+            #     enabled: true
+            #   readiness:
+            #     enabled: true
+
       machine-learning:
-        annotations:
-          reloader.stakater.com/auto: "true"
         replicas: 3
         strategy: RollingUpdate
         pod:
@@ -158,9 +210,11 @@ spec:
       external:
         enabled: true
         className: external
-        annotations: *ingress-annotations
+        annotations:
+          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
-          - host: *host
+          - host: &host immich.abchost.nl
             paths:
               - path: /
                 service:
@@ -186,10 +240,16 @@ spec:
           server:
             app:
               - path: /usr/src/app/upload/library
+          microservices:
+            app:
+              - path: /usr/src/app/upload/library
       thumbnail:
         existingClaim: immich-thumbs
         advancedMounts:
           server:
+            app:
+              - path: /usr/src/app/upload/thumbs
+          microservices:
             app:
               - path: /usr/src/app/upload/thumbs
       encoded-video:
@@ -200,10 +260,16 @@ spec:
           server:
             app:
               - path: /usr/src/app/upload/encoded-video
+          microservices:
+            app:
+              - path: /usr/src/app/upload/encoded-video
       profile:
         existingClaim: immich-profile
         advancedMounts:
           server:
+            app:
+              - path: /usr/src/app/upload/profile
+          microservices:
             app:
               - path: /usr/src/app/upload/profile
       upload:
@@ -212,10 +278,13 @@ spec:
           server:
             app:
               - path: /usr/src/app/upload/upload
+          microservices:
+            app:
+              - path: /usr/src/app/upload/upload
       microservices:
         existingClaim: immich-microservices
         advancedMounts:
-          server:
+          microservices:
             app:
               - path: /geodata-cache
       machine-learning:
