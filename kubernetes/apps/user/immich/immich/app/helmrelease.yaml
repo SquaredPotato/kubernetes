@@ -101,7 +101,7 @@ spec:
                 memory: 1Gi
 
       microservices:
-        replicas: 1
+        replicas: 3
         strategy: RollingUpdate
         pod:
           topologySpreadConstraints:
