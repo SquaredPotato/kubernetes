@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: external-unifi-ingress
-  namespace: ingress
+  namespace: networking
 spec:
   ports:
     - name: https
@@ -31,7 +31,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: &app external-unifi-ingress
-  namespace: ingress
+  namespace: networking
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   labels:

@@ -4,7 +4,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: abchost
-  namespace: ingress
+  namespace: networking
 spec:
   secretName: abchost-tls
   issuerRef:
