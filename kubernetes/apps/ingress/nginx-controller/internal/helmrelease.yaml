@@ -53,7 +53,7 @@ spec:
         controllerValue: "k8s.io/nginx-internal"
       ingressClass: internal
       extraArgs:
-        default-ssl-certificate: "networking/abchost-tls"
+        default-ssl-certificate: "ingress/abchost-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

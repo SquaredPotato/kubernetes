@@ -181,7 +181,7 @@ spec:
       # E.g. to specify the default SSL certificate you can use
       # extraArgs: {}
       extraArgs:
-        default-ssl-certificate: "networking/abchost-tls"
+        default-ssl-certificate: "ingress/abchost-tls"
 
       # -- Additional environment variables to set
       extraEnvs: []
