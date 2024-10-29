@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-jellyfin-ingress
+  namespace: ingress
+spec:
+  ports:
+    - name: http
+      port: &port 8096
+      protocol: TCP
+      targetPort: *port
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: external-jellyfin-ingress
+  labels:
+    kubernetes.io/service-name: external-jellyfin-ingress
+addressType: IPv4
+ports:
+  - name: http
+    appProtocol: http
+    protocol: TCP
+    port: 8096
+endpoints:
+  - addresses:
+      - ${LAN_JELLYFIN_IP}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app external-jellyfin-ingress
+  namespace: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  ingressClassName: external
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  rules:
+    - host: &host jelly.abchost.nl
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                protocol: http
+                port:
+                  number: 8096
+      tls:
+        - hosts:
+          - *host
