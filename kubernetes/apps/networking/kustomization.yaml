@@ -6,4 +6,5 @@ resources:
   - ./namespace.yaml
   - ./nginx-controller/ks.yaml
   - ./blocky/ks.yaml
+  - ./ddns/ks.yaml
 
