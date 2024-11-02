@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: linuxserver/qbittorrent
-      tag: 5.0.0
+      tag: 5.0.1
     strategy:
       type: Recreate
     env:
