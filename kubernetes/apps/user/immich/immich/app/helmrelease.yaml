@@ -294,11 +294,12 @@ spec:
             app:
               - path: /cache
       backups:
-        type: emptyDir
+        type: "emptyDir"
+        medium: "Memory"
         advancedMounts:
           server:
             app:
-              - path: /usr/src/app/upload/upload/backups
+              - path: /usr/src/app/upload/backups
           microservices:
             app:
-              - path: /usr/src/app/upload/upload/backups
+              - path: /usr/src/app/upload/backups
