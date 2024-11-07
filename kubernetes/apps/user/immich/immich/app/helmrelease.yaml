@@ -293,3 +293,12 @@ spec:
           machine-learning:
             app:
               - path: /cache
+      backups:
+        type: emptyDir
+        advancedMounts:
+          server:
+            app:
+              - path: /usr/src/app/upload/upload/backups
+          microservices:
+            app:
+              - path: /usr/src/app/upload/upload/backups
