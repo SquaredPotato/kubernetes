@@ -294,8 +294,7 @@ spec:
             app:
               - path: /cache
       backups:
-        type: "emptyDir"
-        medium: "Memory"
+        existingClaim: immich-backups
         advancedMounts:
           server:
             app:
