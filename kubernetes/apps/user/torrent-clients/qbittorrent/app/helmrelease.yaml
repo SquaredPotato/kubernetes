@@ -44,6 +44,13 @@ spec:
         ports:
           http:
             port: 8080
+      torrent-forward:
+        type: ClusterIP
+        externalIPs:
+          - "${CLUSTER_QBITTORRENT_IP}"
+        ports:
+          qbittorrent:
+            port: 34977
     ingress:
       main:
         enabled: true
