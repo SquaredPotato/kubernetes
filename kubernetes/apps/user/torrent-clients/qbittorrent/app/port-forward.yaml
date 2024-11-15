@@ -1,0 +1,20 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: torrent-forward
+spec:
+  type: ClusterIP
+  selector:
+    app: qbittorrent
+  ports:
+    - name: qbittorrent
+      protocol: TCP
+      port: 34977
+      targetPort: 34977
+    - name: qbittorrent
+      protocol: UDP
+      port: 34977
+      targetPort: 34977
+  externalIPs:
+    - "${CLUSTER_QBITTORRENT_IP}"
