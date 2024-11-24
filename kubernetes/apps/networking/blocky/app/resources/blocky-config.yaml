@@ -25,6 +25,7 @@ customDNS:
     lidarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     longhorn.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     marax.lan: "192.168.2.205"
+    meals.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     mosquitto.abchost.nl: "${CLUSTER_MOSQUITTO_IP}"
     next.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     pgadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
