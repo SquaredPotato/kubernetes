@@ -36,6 +36,12 @@ spec:
               POSTGRES_SERVER: "postgres16-rw.database.svc.cluster.local"
               POSTGRES_PORT: 5432
               POSTGRES_DB: mealie
+              OIDC_AUTH_ENABLED: true
+              OIDC_SIGNUP_ENABLED: true
+              OIDC_AUTO_REDIRECT: true
+              OIDC_ADMIN_GROUP: mealie-admins
+              OIDC_USER_GROUP: mealie-users
+              OIDC_REMEMBER_ME: true
             envFrom:
               - secretRef:
                   name: mealie-secret
