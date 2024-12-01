@@ -20,3 +20,4 @@ shares:
     - \.ini$
     - Thumbs.db$
     - \.DS_Store$
+    - album.nfo$
