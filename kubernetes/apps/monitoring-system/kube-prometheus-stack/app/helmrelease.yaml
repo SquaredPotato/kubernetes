@@ -65,6 +65,8 @@ spec:
       namespaceOverride: ""
       defaultDashboardsEnabled: true
       defaultDashboardsTimezone: Europe/Amsterdam
+      env:
+        GF_DISABLE_SANITIZE_HTML: true
       ingress:
         enabled: true
         pathType: Prefix
