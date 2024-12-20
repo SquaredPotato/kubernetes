@@ -145,16 +145,14 @@ spec:
               REVERSE_GEOCODING_DUMP_DIRECTORY: /geodata-cache
               IMMICH_PORT: *server-port
               IMMICH_WORKERS_EXCLUDE: 'api'
-            # probes:
-            #   startup:
-            #     enabled: true
-            #     spec:
-            #       failureThreshold: 30
-            #       periodSeconds: 5
-            #   liveness:
-            #     enabled: true
-            #   readiness:
-            #     enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 1Gi
 
       machine-learning:
         replicas: 3
