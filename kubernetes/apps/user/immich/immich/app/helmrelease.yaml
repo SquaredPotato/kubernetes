@@ -101,7 +101,7 @@ spec:
                 memory: 1Gi
 
       microservices:
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
         pod:
           topologySpreadConstraints:
@@ -150,6 +150,9 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
+              requests:
+                gpu.intel.com/i915: 1
+                memory: 1Gi
               limits:
                 gpu.intel.com/i915: 1
                 memory: 1Gi
