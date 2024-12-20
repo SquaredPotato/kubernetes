@@ -27,7 +27,7 @@ spec:
   values:
     image:
       repository: louislam/uptime-kuma
-      tag: 1.23.15
+      tag: 1.23.16
     strategy:
       type: Recreate
     env:
