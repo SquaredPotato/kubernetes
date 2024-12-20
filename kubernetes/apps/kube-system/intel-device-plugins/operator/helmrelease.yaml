@@ -1,22 +1,21 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cluster-apps-node-feature-discovery
+  name: cluster-apps-intel-device-plugins-operator
   namespace: kube-system
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
-      chart: node-feature-discovery
-      version: 0.16.6
+      chart: intel-device-plugins-operator
+      version: 0.31.1
       sourceRef:
         kind: HelmRepository
-        name: nfd
+        name: intel
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     crds: CreateReplace
     remediation:
       retries: 3
@@ -27,6 +26,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    topologyUpdater:
-      updateInterval: 1800
+  dependsOn:
+    - name: cluster-apps-node-feature-discovery
+      namespace: kube-system
