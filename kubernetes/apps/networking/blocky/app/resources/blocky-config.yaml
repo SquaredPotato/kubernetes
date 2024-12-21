@@ -146,9 +146,7 @@ redis:
   database: ${REDIS_BLOCKY_DB}
   sentinelPassword: ${REDIS_PASS}
   sentinelAddresses:
-    - redis-node-0.redis-headless.database:26379
-    - redis-node-1.redis-headless.database:26379
-    - redis-node-2.redis-headless.database:26379
+    - dragonfly.database.svc.cluster.local:6379
 
 queryLog:
   type: postgresql
