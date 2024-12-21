@@ -6,7 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-longhorn
     - name: cluster-apps-cloudnative-pg-cluster16
   path: ./kubernetes/apps/user/utilities/invoice-ninja/app
   prune: true
