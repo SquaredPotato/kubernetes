@@ -32,6 +32,7 @@ spec:
               repository: invoiceninja/invoiceninja
               tag: 5.11.6
             env:
+              DB_CONNECTION: "pgsql"
               REDIS_DBINDEX: ${REDIS_INVOICE_NINJA_DB}
             envFrom:
               - secretRef:
