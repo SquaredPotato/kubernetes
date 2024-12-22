@@ -30,7 +30,6 @@ spec:
       phpmyadmin:
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
           phpmyadmin:
             image:

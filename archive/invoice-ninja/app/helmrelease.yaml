@@ -34,9 +34,11 @@ spec:
               repository: invoiceninja/invoiceninja
               tag: 5.11.6
             env:
-              APP_URL: "https://invoice.abchost.nl:9000"
+              APP_NAME: "Infinigon Systems"
+              APP_URL: "https://invoice.abchost.nl"
               APP_DEBUG: "true"
               APP_CIPHER: AES-256-CBC
+              TRUSTED_PROXIES: 10.42.0.0/16
               REDIS_DBINDEX: ${REDIS_INVOICE_NINJA_DB}
             envFrom:
               - secretRef:
