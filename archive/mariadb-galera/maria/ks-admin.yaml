@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mariadb-phpmyadmin
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/database/mariadb/admin
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  timeout: 5m
