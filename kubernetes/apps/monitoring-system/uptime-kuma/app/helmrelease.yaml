@@ -85,4 +85,6 @@ spec:
       config:
         enabled: true
         existingClaim: uptime-kuma
-        globalMounts: /app/data
+        globalMounts:
+          - path: /app/data
+            readOnly: false
