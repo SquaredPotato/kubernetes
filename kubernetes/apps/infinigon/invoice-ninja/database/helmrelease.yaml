@@ -29,7 +29,7 @@ spec:
           main:
             image:
               repository: mariadb
-              tag: 11.4.3
+              tag: 11.6.2
             env:
               MARIADB_AUTO_UPGRADE: "TRUE"
               MARIADB_DATABASE:
