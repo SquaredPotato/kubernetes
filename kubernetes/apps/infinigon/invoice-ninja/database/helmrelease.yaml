@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.minuette.horse/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app invoice-ninja-mariadb
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: mariadb
+              tag: 11.4.3
+            env:
+              MARIADB_AUTO_UPGRADE: "TRUE"
+              MARIADB_DATABASE:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret invoice-ninja-db-secret
+                    key: MARIADB_DATABASE
+              MARIADB_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret invoice-ninja-db-secret
+                    key: MARIADB_USER
+              MARIADB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret invoice-ninja-db-secret
+                    key: mariadb-password
+              MARIADB_ROOT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret invoice-ninja-db-secret
+                    key: MARIADB_ROOT_PASSWORD
+            envFrom:
+              - secretRef:
+                  name: invoice-ninja-db-secret
+            resources:
+              requests:
+                memory: 512Mi
+                cpu: 10m
+              limits:
+                memory: 1024Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      main:
+        controller: main
+        ports:
+          mysql:
+            protocol: TCP
+            port: 3306
+    persistence:
+      config:
+        existingClaim: invoice-ninja-db
+        globalMounts:
+          - path: /var/lib/mysql
