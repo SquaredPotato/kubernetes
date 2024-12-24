@@ -113,6 +113,12 @@ spec:
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general
+        path: /mnt/MAIN/contain/storage/general/torrents
         globalMounts:
-          - path: /mnt/general
+          - path: /mnt/general/torrents
+      movies:
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/media/movies
+        globalMounts:
+          - path: /mnt/general/movies
