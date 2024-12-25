@@ -88,7 +88,7 @@ spec:
       app:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        className: "internal"
+        className: "external"
         hosts:
           - host: jelly.abchost.nl
             paths:
