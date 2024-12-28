@@ -43,6 +43,7 @@ spec:
             env:
               JELLYFIN_PublishedServerUrl: http://${CLUSTER_JELLYFIN_IP}:8096
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_DATA_DIR: /var/lib/jellyfin
             probes:
               liveness: &probes
                 enabled: true
@@ -103,7 +104,7 @@ spec:
         advancedMounts:
           jellyfin:
             app:
-              - path: /config
+              - path: /var/lib/jellyfin
       movies:
         type: nfs
         server: ${LAN_TRUENAS_IP}
