@@ -44,6 +44,8 @@ spec:
               JELLYFIN_PublishedServerUrl: http://${CLUSTER_JELLYFIN_IP}:8096
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_DATA_DIR: /var/lib/jellyfin
+              JELLYFIN_LOG_DIR: /var/lib/jellyfin/log
+              JELLYFIN_CONFIG_DIR: /var/lib/jellyfin/config
             probes:
               liveness: &probes
                 enabled: true
