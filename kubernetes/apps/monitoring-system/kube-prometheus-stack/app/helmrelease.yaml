@@ -153,7 +153,7 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       prometheusSpec:
-        retention: 10d
+        retention: 7d
         retentionSize: "50GB"
         storageSpec:
           volumeClaimTemplate:
