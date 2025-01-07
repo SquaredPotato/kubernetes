@@ -107,15 +107,20 @@ spec:
           jellyfin:
             app:
               - path: /var/lib/jellyfin
-      movies:
+      media:
         type: nfs
-        server: ${LAN_TRUENAS_IP}
+        server: "${LAN_TRUENAS_IP}"
         path: /mnt/MAIN/media/
         advancedMounts:
           jellyfin:
             app:
               - path: /mnt/general/
-
+      music:
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/miscellaneous/music
+        globalMounts:
+          - path: /mnt/general/music
       tmpfs:
         type: emptyDir
         advancedMounts:
