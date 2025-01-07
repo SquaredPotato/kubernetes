@@ -81,5 +81,5 @@ spec:
         enabled: true
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general
+        path: /mnt/MAIN/media
         mountPath: /mnt/general

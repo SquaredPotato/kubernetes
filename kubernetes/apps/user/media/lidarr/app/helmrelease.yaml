@@ -113,15 +113,9 @@ spec:
           - path: /run
       config:
         existingClaim: lidarr
-      music:
-        type: nfs
-        server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/miscellaneous/music
-        globalMounts:
-          - path: /mnt/general/music
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general/torrents
+        path: /mnt/MAIN/media/
         globalMounts:
-          - path: /mnt/general/torrents
+          - path: /mnt/general/

@@ -110,37 +110,12 @@ spec:
       movies:
         type: nfs
         server: ${LAN_TRUENAS_IP}
-        path: /mnt/MAIN/media/movies
+        path: /mnt/MAIN/media/
         advancedMounts:
           jellyfin:
             app:
-              - path: /mnt/general/movies
-      shows:
-        type: nfs
-        server: ${LAN_TRUENAS_IP}
-        path: /mnt/MAIN/media/shows
-        advancedMounts:
-          jellyfin:
-            app:
-              - path: /mnt/general/shows
+              - path: /mnt/general/
 
-      live:
-        type: nfs
-        server: ${LAN_TRUENAS_IP}
-        path: /mnt/MAIN/media/live
-        advancedMounts:
-          jellyfin:
-            app:
-              - path: /mnt/general/live
-
-      music:
-        type: nfs
-        server: ${LAN_TRUENAS_IP}
-        path: /mnt/MAIN/miscellaneous/music
-        advancedMounts:
-          jellyfin:
-            app:
-              - path: /mnt/general/music
       tmpfs:
         type: emptyDir
         advancedMounts:

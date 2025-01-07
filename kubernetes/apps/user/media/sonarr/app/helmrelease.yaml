@@ -101,13 +101,7 @@ spec:
         existingClaim: sonarr
       media:
         type: nfs
-        server:  "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general/torrents
-        globalMounts:
-          - path: /mnt/general/torrents
-      shows:
-        type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/media/shows
+        path: /mnt/MAIN/media/
         globalMounts:
-          - path: /mnt/general/shows
+          - path: /mnt/general/
