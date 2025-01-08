@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/hotio/lidarr
-              tag: release-2.8.2.4493@sha256:21aaeb29cfe76d6f4185daeb99372774da7ed775a937526d8fa3c4dc5e521996
+              tag: release-2.8.2.4493@sha256:9a169aecaf5d8d4682a17df6d01701393ed456efdc411468a92cdc0b8c80d3bd
             env:
               COMPlus_EnableDiagnostics: "0"
               LIDARR__AUTHENTICATION_METHOD: External
