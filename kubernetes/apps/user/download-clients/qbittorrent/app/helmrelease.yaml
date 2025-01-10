@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: linuxserver/qbittorrent
-      tag: 5.0.3
+      repository: hotio/qbittorrent
+      tag: release-5.0.3
     strategy:
       type: Recreate
     env:
