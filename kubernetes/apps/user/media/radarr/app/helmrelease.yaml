@@ -34,11 +34,12 @@ spec:
               tag: 5.17.2.9580@sha256:32d0e8d46f5619069d88445936670ffbca5a3aab7ed2e94e77a834ed85df81bb
             env:
               COMPlus_EnableDiagnostics: "0"
-              RADARR__AUTHENTICATION_METHOD: External
-              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
-              RADARR__INSTANCE_NAME: "Radarr"
-              RADARR__PORT: &port 80
-              RADARR__LOG_LEVEL: info
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__APP__INSTANCENAME: "Radarr"
+              RADARR__SERVER__PORT: &port 80
+              RADARR__LOG__LEVEL: info
+              RADARR__LOG__DBENABLED: "False"
               RADARR__THEME: "dark"
               TZ: "Europe/Amsterdam"
             envFrom:
@@ -52,7 +53,7 @@ spec:
                   httpGet:
                     path: /ping
                     port: *port
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
@@ -105,7 +106,9 @@ spec:
           - path: /etc/localtime
             readOnly: true
       config:
-        existingClaim: radarr
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/media/config/radarr
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
