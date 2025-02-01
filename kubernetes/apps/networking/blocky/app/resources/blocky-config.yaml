@@ -132,6 +132,9 @@ blocking:
     malicious:
       - |
         discord.com
+    trackers:
+      - |
+        dns.msftncsi.com
   clientGroupsBlock:
     default:
       - platforms
