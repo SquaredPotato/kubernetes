@@ -115,7 +115,7 @@ pycparser==2.22
     # via cffi
 pygments==2.19.1
     # via rich
-pyparsing==3.2.1
+pyparsing==3.2.2
     # via packaging
 pyrsistent==0.20.0
     # via jsonschema
