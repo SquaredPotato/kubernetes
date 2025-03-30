@@ -158,7 +158,7 @@ spec:
                 memory: 4Gi
 
       machine-learning:
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
         pod:
           topologySpreadConstraints:
