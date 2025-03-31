@@ -32,6 +32,6 @@ spec:
       volumes:
         - name: volume
           persistentVolumeClaim:
-            claimName: home-assistant
+            claimName: zigbee2mqtt
 
             # ./pgloader --with "quote identifiers" --with "data only" --cast "column table_blacklist.timestamp to timestamp" --cast "column table_blacklist_movie.timestamp to timestamp" --cast "column table_history.timestamp to timestamp" --cast "column table_history_movie.timestamp to timestamp" /bazarr.db "postgresql://bazarr:29o228ExYd5g5m82Q6qwATU2JVSy3iX8@postgres-rw.database.svc.cluster.local:5432/bazarr"

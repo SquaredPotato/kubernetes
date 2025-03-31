@@ -30,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/prowlarr
-              tag: 1.32.2.4987@sha256:fa01195217ab1a7aac3aa516fcc50ff886ea26c177b2546ebe364e7b2cf1a282
+              repository: ghcr.io/home-operations/prowlarr
+              tag: 1.33.1.4997@sha256-3bb878cf5d447934f4f3848315f3cf393bdc269eee9f823df34e06768a55ddb3
             env:
               COMPlus_EnableDiagnostics: "0"
               PROWLARR__AUTHENTICATION_METHOD: External

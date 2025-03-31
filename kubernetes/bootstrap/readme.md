@@ -6,16 +6,6 @@
 scp server@192.168.4.200:~/.kube/config ~/.kube/config
 ```
 
-## Install Flux into the cluster
-
-```sh
-task flux:bootstrap cluster=/
-```
-
-task is obtained from the [`go-task`](https://taskfile.dev/installation/) package
-
-# Deprecated
-
 ### Apply CRD's
 
 ```sh
