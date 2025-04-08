@@ -229,7 +229,7 @@ spec:
       library:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general/immich/library
+        path: /mnt/MAIN/miscellaneous/immich/library
         advancedMounts:
           server:
             app:
@@ -249,7 +249,7 @@ spec:
       encoded-video:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/contain/storage/general/immich/encoded-videos
+        path: /mnt/MAIN/miscellaneous/immich/encoded-videos
         advancedMounts:
           server:
             app:
