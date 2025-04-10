@@ -25,6 +25,8 @@ spec:
       envFrom:
         - secretRef:
             name: *secret
+      volumes:
+        - name: authentik
     authentik:
       redis:
         host: dragonfly.database.svc.cluster.local
