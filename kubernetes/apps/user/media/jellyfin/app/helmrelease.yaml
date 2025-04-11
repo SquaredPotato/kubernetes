@@ -69,6 +69,17 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 4Gi
+          jellysearch:
+            image:
+              repository: domistyle/jellysearch
+              tag: latest
+            env:
+              INDEX_CRON: "0 0 0/2 ? * * *"
+              JELLYFIN_URL: "http://jellyfin.media:8096"
+              MEILI_URL: "http://meilisearch.utilities:7700"
+            envFrom:
+              - secretRef:
+                  name: meili-master-key
 
     service:
       app:
@@ -85,12 +96,22 @@ spec:
           discovery:
             port: 7359
             protocol: UDP
-
+      jellysearch:
+        controller: jellyfin
+        type: LoadBalancer
+        ports:
+          http:
+            port: 5000
 
     ingress:
       app:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            if ($arg_searchTerm) {
+              proxy_pass http://jellyfin-jellysearch.media:5000;
+              break;
+            }
         className: "external"
         hosts:
           - host: jelly.abchost.nl
@@ -107,6 +128,10 @@ spec:
           jellyfin:
             app:
               - path: /var/lib/jellyfin
+            jellysearch:
+              - path: /config
+                readOnly: true
+
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
