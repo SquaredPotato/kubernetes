@@ -107,7 +107,8 @@ spec:
       app:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
+          nginx.ingress.kubernetes.io/location-snippets: |
+            add_header my-test-header test-value;
             if ($arg_searchTerm) {
               proxy_pass http://jellyfin-jellysearch.media:5000;
               break;
