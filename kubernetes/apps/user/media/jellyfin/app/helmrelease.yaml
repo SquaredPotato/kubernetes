@@ -75,7 +75,7 @@ spec:
               tag: latest
             env:
               INDEX_CRON: "0 0 0/2 ? * * *"
-              JELLYFIN_URL: "http://jellyfin.media:8096"
+              JELLYFIN_URL: "https://jelly.abchost.nl"
               MEILI_URL: "http://meilisearch.utilities:7700"
             envFrom:
               - secretRef:
@@ -107,8 +107,7 @@ spec:
       app:
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-          nginx.ingress.kubernetes.io/location-snippets: |
-            add_header my-test-header test-value;
+          nginx.ingress.kubernetes.io/configuration-snippet: |
             if ($arg_searchTerm) {
               proxy_pass http://jellyfin-jellysearch.media:5000;
               break;
