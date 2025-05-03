@@ -115,7 +115,9 @@ spec:
         globalMounts:
           - path: /run
       config:
-        existingClaim: lidarr
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/miscellaneous/config/lidarr
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
