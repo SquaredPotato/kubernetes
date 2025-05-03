@@ -98,7 +98,9 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: sonarr
+        type: nfs
+        server: "${LAN_TRUENAS_IP}"
+        path: /mnt/MAIN/miscellaneous/config/sonarr
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
