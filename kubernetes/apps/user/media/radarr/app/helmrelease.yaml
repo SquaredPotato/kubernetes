@@ -108,7 +108,7 @@ spec:
       config:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
-        path: /mnt/MAIN/media/config/radarr
+        path: /mnt/MAIN/miscellaneous/config/radarr
       media:
         type: nfs
         server: "${LAN_TRUENAS_IP}"
