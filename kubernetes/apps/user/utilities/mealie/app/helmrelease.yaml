@@ -33,7 +33,7 @@ spec:
               AUTO_BACKUP_ENABLED: false
               ALLOW_SIGNUP: false
               DB_ENGINE: postgres
-              POSTGRES_SERVER: "postgres16-rw.database.svc.cluster.local"
+              POSTGRES_SERVER: "postgres17-rw.database.svc.cluster.local"
               POSTGRES_PORT: 5432
               POSTGRES_DB: mealie
               OIDC_AUTH_ENABLED: true
