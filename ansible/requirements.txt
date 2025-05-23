@@ -16,7 +16,7 @@ attrs==25.3.0
     # via jsonschema
 binaryornot==0.4.4
     # via cookiecutter
-cachetools==5.5.2
+cachetools==6.0.0
     # via google-auth
 certifi==2025.4.26
     # via
