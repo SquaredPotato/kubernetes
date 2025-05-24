@@ -3,13 +3,13 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16
+  name: postgres17-2
   namespace: database
   annotations:
     kyverno.io/ignore: "true"
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.3-v0.2.1
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0
   enableSuperuserAccess: true
   primaryUpdateStrategy: unsupervised
   storage:
@@ -18,14 +18,14 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
   bootstrap:
-     recovery:
-       source: &previousCluster postgres16-v0
+    # recovery:
+    #   source: &previousCluster postgres17-v0
   postgresql:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
     shared_preload_libraries:
-      - "vectors.so"
+      - "vchord.so"
   monitoring:
     enablePodMonitor: true
   backup:
@@ -36,7 +36,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: &currentCluster postgres16-v1
+      serverName: &currentCluster postgres17-v0
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -45,18 +45,18 @@ spec:
           name: cloudnative-pg-secret
           key: backblaze-key
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  externalClusters:
-   - name: *previousCluster
-     barmanObjectStore:
-       wal:
-         compression: bzip2
-         maxParallel: 8
-       destinationPath: s3://cloudnative-pg/
-       endpointURL: https://s3.eu-central-003.backblazeb2.com
-       s3Credentials:
-         accessKeyId:
-           name: cloudnative-pg-secret
-           key: backblaze-id
-         secretAccessKey:
-           name: cloudnative-pg-secret
-           key: backblaze-key
+  # externalClusters:
+  #   - name: *previousCluster
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 8
+  #       destinationPath: s3://cloudnative-pg/
+  #       endpointURL: https://s3.eu-central-003.backblazeb2.com
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg-secret
+  #           key: backblaze-id
+  #         secretAccessKey:
+  #           name: cloudnative-pg-secret
+  #           key: backblaze-key
