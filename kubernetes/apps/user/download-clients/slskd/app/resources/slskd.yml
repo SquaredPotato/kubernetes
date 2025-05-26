@@ -4,6 +4,8 @@ directories:
   incomplete: /mnt/general/soulseek/incomplete
 flags:
   no_version_check: true
+  no_share_scan: true
+  force_share_scan: false
 metrics:
   enabled: true
   url: /metrics
