@@ -32,6 +32,7 @@ spec:
         host: dragonfly.database.svc.cluster.local
         db: ${REDIS_AUTHENTIK_DB}
     server:
+      replicas: 2
       metrics:
         enabled: true
         serviceMonitor:
