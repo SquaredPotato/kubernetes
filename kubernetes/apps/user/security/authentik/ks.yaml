@@ -7,7 +7,7 @@ metadata:
 spec:
   path: ./kubernetes/apps/user/security/authentik/app
   dependsOn:
-    - name: cluster-apps-cloudnative-pg-cluster16
+    - name: cluster-apps-cloudnative-pg-cluster17
     - name: cluster-apps-dragonfly-cluster
     - name: cluster-apps-dragonfly-operator
   prune: true
