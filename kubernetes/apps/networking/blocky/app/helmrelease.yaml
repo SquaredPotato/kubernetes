@@ -35,7 +35,7 @@ spec:
                 spec:
                   tcpSocket:
                     port: &port 53
-                  initialDelaySeconds: 15
+                  initialDelaySeconds: 60
                   periodSeconds: 30
                   failureThreshold: 3
               readiness: *probe
