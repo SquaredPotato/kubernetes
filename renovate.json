@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     "docker:enableMajor",
     ":disableRateLimiting",
     ":separateMultipleMajorReleases",
@@ -13,17 +13,27 @@
   ],
   "platform": "github",
   "rollbackPrs": true,
-  "assignees": ["SquaredPotato"],
+  "assignees": [
+    "SquaredPotato"
+  ],
   "ansible": {
-    "fileMatch": ["ansible/.+\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/ansible/.+\\.ya?ml$/"
+    ]
   },
   "flux": {
-    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/kubernetes/.+\\.ya?ml$/"
+    ]
   },
   "helm-values": {
-    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/kubernetes/.+\\.ya?ml$/"
+    ]
   },
   "kubernetes": {
-    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/kubernetes/.+\\.ya?ml$/"
+    ]
   }
 }
