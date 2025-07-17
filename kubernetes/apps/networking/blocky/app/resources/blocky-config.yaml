@@ -20,6 +20,7 @@ customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
   mapping:
+    api.lidarr.audio: "api.musicinfo.pro"
     alertmanager.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     bw.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     bazarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
