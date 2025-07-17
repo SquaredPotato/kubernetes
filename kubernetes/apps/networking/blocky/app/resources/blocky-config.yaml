@@ -13,6 +13,8 @@ upstreams:
 
 conditional:
   fallbackUpstream: true
+  rewrite:
+    api.lidarr.audio: "api.musicinfo.pro"
   mapping:
     solid-optics.com: 10.2.0.2
 
