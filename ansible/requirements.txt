@@ -80,7 +80,7 @@ kubernetes==33.1.0
     # via -r requirements.in
 markupsafe==3.0.2
     # via jinja2
-molecule==25.6.0
+molecule==25.7.0
     # via
     #   -r requirements.in
     #   molecule-vagrant
