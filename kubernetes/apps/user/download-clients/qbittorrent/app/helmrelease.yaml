@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: hotio/qbittorrent
-      tag: release-5.0.3
+      repository: ghcr.io/home-operations/qbittorrent
+      tag: 5.1.2@sha256:9dd0164cc23e9c937e0af27fd7c3f627d1df30c182cf62ed34d3f129c55dc0e8
     strategy:
       type: Recreate
     env:
@@ -39,18 +39,20 @@ spec:
         value: "002"
       - name: TZ
         value: "Europe/Amsterdam"
+      - QBT_WEBUI_PORT: &port 80
+      - QBT_TORRENTING_PORT: &torrentPort 34977
     service:
       main:
         ports:
           http:
-            port: 8080
+            port: *port
       torrent-forward:
         type: LoadBalancer
         ports:
           qbittorrent:
             protocol: TCP
-            port: 34977
-            targetPort: 34977
+            port: *torrentPort
+            targetPort: *torrentPort
         status:
           loadBalancerIP:
             ingress:
@@ -65,13 +67,6 @@ spec:
               - path: /
                 pathType: Prefix
     persistence:
-      time:
-        enabled: true
-        type: hostPath
-        hostPath: /etc/localtime
-        globalMounts:
-          - path: /etc/localtime
-            readOnly: true
       config:
         enabled: true
         type: pvc
