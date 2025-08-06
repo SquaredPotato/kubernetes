@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: outlinewiki/outline
-              tag: 0.85.1
+              tag: 0.86.0
             env:
               URL: "https://outline.abchost.nl"
               PORT: &outline-port 3000
