@@ -152,7 +152,7 @@ rich==14.1.0
     #   molecule
 rsa==4.9.1
     # via google-auth
-ruamel-yaml==0.18.14
+ruamel-yaml==0.18.15
     # via pre-commit-hooks
 selinux==0.3.0
     # via molecule-vagrant
