@@ -22,13 +22,11 @@ customDNS:
   customTTL: 1h
   filterUnmappedTypes: true
   mapping:
-    alertmanager.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     bw.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     bazarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
-    blocky.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     dns.abchost.nl: "${CLUSTER_BLOCKY_IP}"
     grafana.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
-    home.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
+    home.abchost.nl: "10.0.2.5"
     idrac.lan: "192.168.2.126"
     immich.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     invoice.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
@@ -37,11 +35,9 @@ customDNS:
     longhorn.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     marax.lan: "192.168.2.205"
     meals.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
-    mosquitto.abchost.nl: "${CLUSTER_MOSQUITTO_IP}"
     next.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     outline.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     pgadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
-    phpmyadmin.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     printer.lan: "${LAN_PRINTER_IP}"
     prometheus.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     prowlarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
@@ -50,7 +46,7 @@ customDNS:
     radarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     rancher.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     schokker.dev: "${LAN_NUC}"
-    sh.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    sh.abchost.nl: "10.0.2.5"
     sso.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
     sonarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     slskd.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
@@ -62,7 +58,7 @@ customDNS:
     un.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     univac.lan: "${LAN_NUC}"
     volumio.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
-    zigbee.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
+    zigbee.abchost.nl: "10.0.2.4"
 
 prometheus:
   enable: true
