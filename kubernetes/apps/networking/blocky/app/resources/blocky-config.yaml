@@ -47,7 +47,7 @@ customDNS:
     rancher.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     schokker.dev: "${LAN_NUC}"
     sh.abchost.nl: "10.0.2.5"
-    sso.abchost.nl: "${CLUSTER_EXTERNAL_INGRESS_IP}"
+    sso.abchost.nl: "10.0.2.5"
     sonarr.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     slskd.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
     status.abchost.nl: "${CLUSTER_INTERNAL_INGRESS_IP}"
