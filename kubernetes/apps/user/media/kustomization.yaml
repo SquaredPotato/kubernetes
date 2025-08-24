@@ -5,7 +5,7 @@ metadata:
   name: user-apps-media
 resources:
   - ./namespace.yaml
-  - ./bazarr/ks.yaml
+#  - ./bazarr/ks.yaml
 #  - ./jellyfin/ks.yaml
   - ./lidarr/ks.yaml
   - ./sonarr/ks.yaml
