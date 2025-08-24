@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
 #  - ./atuin/ks.yaml
-  - ./mealie/ks.yaml
+#  - ./mealie/ks.yaml
 #  - ./meilisearch/ks.yaml
 #  - ./outline/ks.yaml
   - ./vaultwarden/ks.yaml
