@@ -8,4 +8,4 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./prowlarr/ks.yaml
+#  - ./prowlarr/ks.yaml
