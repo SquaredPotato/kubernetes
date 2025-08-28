@@ -6,4 +6,4 @@ metadata:
   name: user-apps-immich
 resources:
   - ./namespace.yaml
-  - ./immich/ks.yaml
+#  - ./immich/ks.yaml
